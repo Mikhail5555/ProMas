@@ -38,7 +38,7 @@ module ProtossProbeEvent {
 		then adopt(unitAmount("Protoss Assimilator", 1)).
 		
 	% If we need Pylon, set target to build an Assimilator
-	if not(goal(unitAmount("Protoss Pylon", 1))), bel(builder), bel(resources(_,_,Y,X), Y + 2 >= X)
+	if not(goal(unitAmount("Protoss Pylon", 1))), bel(builder), bel(resources(_,_,Y,X), Y + 4 >= X)
 		then adopt(unitAmount("Protoss Pylon", 1)).
 		
 	% If we need gas set target to build an Assimilator
