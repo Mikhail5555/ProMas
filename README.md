@@ -11,4 +11,5 @@
 
 
 Group Contract on Google Docs: https://docs.google.com/document/d/17Wbl8KHuAWx20vBCKOd4Dz3U6Uw39mxMM8JFW3Zlz3g
+
 Personal Hour Log: https://docs.google.com/spreadsheets/d/11aYy5TRvizZpyEkPdSC2AodSGSlf-V0u4POVe77VifE
