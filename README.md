@@ -7,7 +7,7 @@
 | Anne    | 4551761        | afehling | A.H.Fehling@student.tudelft.nl | Secretary            |
 | Henk    | 4549392        | habjanse | H.A.B.janse@student.tudelft.nl | Planner              |
 | Kevin   | 4362411        | kdenboon | kevin.2301@hotmail.com         | Task Coordinator     |
-| Thomas  |                |          |                                | Review Meeting Chair |
+| Thomas  | 4590139        | tvanderbij|thomasvanderbij@gmail.com      | Review Meeting Chair |
 
 
 Group Contract on Google Docs: https://docs.google.com/document/d/17Wbl8KHuAWx20vBCKOd4Dz3U6Uw39mxMM8JFW3Zlz3g
