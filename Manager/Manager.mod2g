@@ -1,0 +1,26 @@
+use "../General/General" as knowledge.
+use Manager as knowledge.
+order = linearall.
+
+module Manager {
+	
+	% Receive all probes
+	forall (Name).sent(probe(Id)) 
+		do insert(probe(Name, Id)).
+		
+	% If the probe stops to exist, delete it
+	if bel(isBuilder(Name, Id), not(probe(Name, Id)))
+		then delete(isBuilder(Name, Id)).
+	
+	% Assign a builder
+	if bel(not(isBuilder(Name, Id)), probe(Name, Id))
+		then insert(isBuilder(Name, Id)) + (Name).send(builder).
+		
+	% If the probe stops to exist, delete it
+	if bel(isGasCollector(Name, Id), not(probe(Name, Id)))
+		then delete(isGasCollector(Name, Id)).
+	
+	% Assign a GasGather
+	if bel(not(isGasCollector(Name, Id)), probe(Name, Id), not(isBuilder(Name, Id)))
+		then insert(isGasCollector(Name, Id)) + (Name).send(gasCollector).
+}

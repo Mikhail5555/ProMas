@@ -1,0 +1,21 @@
+use General as knowledge.
+order = linearall.
+
+module GeneralEvents {
+	
+	% Update resources
+	if percept(resources(NewM, NewG, NewS, NewMS)), bel(resources(OldM, OldG, OldS, OldMS))
+		then delete(resources(OldM, OldG, OldS, OldMS)) + insert(resources(NewM, NewG, NewS, NewMS)).
+		
+	% Update the unitAmount
+	forall percept(unitAmount(Type,Count)), not(bel(unitAmount(Type,Count)))
+		do insert(unitAmount(Type,Count)).
+	forall bel(unitAmount(Type,Count)),not(percept(unitAmount(Type,Count)))
+		do delete(unitAmount(Type,Count)).
+		
+	% Update the constructionSites
+	forall percept(constructionSite(X, Y, InPylonRange)), not(bel(constructionSite(X,Y, InPylonRange))) 
+		do insert(constructionSite(X,Y, InPylonRange)).
+	forall bel(constructionSite(X,Y, InPylonRange)),not(percept(constructionSite(X,Y, InPylonRange))) 
+		do delete(constructionSite(X,Y, InPylonRange)).
+}

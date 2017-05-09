@@ -1,0 +1,23 @@
+use ProtossProbe as knowledge.
+use ProtossProbe as actionspec.
+use "../General/General" as knowledge.
+
+module ProtossProbe {
+	
+	% Build Pylon
+	if a-goal(unitAmount("Protoss Pylon", N)), not(bel(aggregate_all(count,friendly("Protoss Pylon",ID,_), N))), bel(constructionSite(X,Y,InPylonRange)), bel(canBuild("Protoss Pylon"))
+		then build("Protoss Pylon", X, Y).
+	
+	% Build Assimilator 
+	if a-goal(unitAmount("Protoss Assimilator", 1)), bel(vespeneGeyser(_,_,X,Y)), bel(canBuild("Protoss Assimilator")), bel(aggregate_all(count,friendly("Protoss Probe",ID,_),L), L >= 7)
+		then build("Protoss Assimilator", X, Y).
+		
+	% Gather gas if available if assigned to gather gas
+	if a-goal(workerActivity(gatheringGas)), bel(friendly("Protoss Assimilator",Id,_))
+		then gather(Id).
+		
+	% If we need to gather minerals, and we're not doing anything, start gathering minerals.
+	if goal(gathered(Id)), bel(workerActivity(idling)) 
+		then gather(Id).
+	
+}

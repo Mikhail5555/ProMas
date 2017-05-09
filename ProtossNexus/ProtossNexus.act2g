@@ -1,0 +1,9 @@
+use ProtossNexus as knowledge.
+use "../General/General" as knowledge.
+
+% Trains an unit
+define train(Type) with
+	pre{ true }
+	post{ true }
+
+	

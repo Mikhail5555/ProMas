@@ -1,0 +1,21 @@
+use ProtossProbe as knowledge.
+use "../General/General" as knowledge.
+
+
+module ProtossProbeInit {	
+			
+	% Store our own identifier and initial state (updated in event).
+	if percept(self(Id,Type,_,_,_)), percept(workerActivity(Activity)) then insert(self(Id, Type), workerActivity(Activity)) + (manager).send:(probe(Id)).
+	
+	% Initial storage of the mineral field identifiers (amounts are updated in event).
+	% Also adopt the goal to fully mine each mineral field.
+	forall percept(mineralField(Id,Amount,_,_,_)) do insert(mineralField(Id,Amount)) + adopt(gathered(Id)).
+	
+	% Init ConstructionSites
+	forall percept(constructionSite(X,Y,InPylonRange))
+		do insert(constructionSite(X,Y,InPylonRange)).
+			
+	%Initialize resources
+	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
+		then insert(resources(Minerals, Gas, CSupply, MSupply)).
+}
