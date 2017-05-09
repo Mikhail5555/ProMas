@@ -6,5 +6,5 @@
 | Mikhail |                |          |                                | Chair                |                   |
 | Anne    | 4551761        | afehling | A.H.Fehling@student.tudelft.nl | Secretary            |                   |
 | Henk    | 4549392        | habjanse | H.A.B.janse@student.tudelft.nl | Planner              |                   |
-| Kevin   |                |          |                                | Task Coordinator     |                   |
+| Kevin   | 4362411        | kdenboon | kevin.2301@hotmail.com         | Task Coordinator     |                   |
 | Thomas  |                |          |                                | Review Meeting Chair |                   |
