@@ -1,0 +1,6 @@
+
+use ProtossForge as knowledge.
+
+module ProtossForge {
+	if true then insert(true).
+}

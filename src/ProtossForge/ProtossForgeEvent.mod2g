@@ -1,0 +1,11 @@
+use ProtossForge as knowledge.
+
+module ProtossForgeEvent {
+	
+	forall bel(resources(OldM, OldG)), percept(resources(NewM, NewG, _, _)) do delete(resources(OldM, OldG)) + insert(resources(NewM, NewG)).
+	
+	
+	forall percept(upgrading(Upgrade)), not(bel(upgrading(Upgrade))) do insert(upgrading(Upgrade)).
+	forall bel(upgrading(Upgrade)), not(percept(upgrade(Upgrading))) do delete(upgrading(Upgrade)).
+	
+}
