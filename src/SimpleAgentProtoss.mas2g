@@ -29,6 +29,12 @@ define protossProbe as agent {
 	use ProtossProbe.ProtossProbeEvent as event module.
 } 
 
+define protossForge as agent {
+	use ProtossForge.ProtossForge as main module.
+	use ProtossForge.ProtossForgeInit as init module.
+	use ProtossForge.ProtossForgeEvent as event module.
+}
+
 launchpolicy{
 	% Launch the manager
 	when type = manager launch manager.
@@ -37,4 +43,6 @@ launchpolicy{
 	when type = protossNexus launch mainBase.
 	% Launch a probe agent for each worker
 	when type = protossProbe launch protossProbe.
+	%Launch a ForgeAgent for each forge.
+	when type = protossForge launch protossForge.
 }

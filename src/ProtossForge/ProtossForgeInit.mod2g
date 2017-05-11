@@ -1,0 +1,8 @@
+use ProtossForge as knowledge.
+
+module ProtossForgeInit {
+	if true then insert(upgrading(false)).
+	
+	if true then insert(resources(0,0)).
+	
+}
