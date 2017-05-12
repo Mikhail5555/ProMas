@@ -5,14 +5,19 @@ use "../General/General" as knowledge.
 module ProtossProbe {
 	
 	% Build Pylon
+	% If you have the goal to build a Protoss Pylon and there is not a Protoss Pylon yet.
+	% And you are able to built and there is a construction site, then build the Protoss Pylon.
 	if a-goal(unitAmount("Protoss Pylon", N)), not(bel(aggregate_all(count,friendly("Protoss Pylon",ID,_), N))), bel(constructionSite(X,Y,InPylonRange)), bel(canBuild("Protoss Pylon"))
 		then build("Protoss Pylon", X, Y).
 	
-	% Build Assimilator 
+	% Build Assimilator.
+	% If you have the goal to build a Protoss Assimilator and there is a vespene geyser. And you are able to build a Protoss Assimilator and there is a Protoss Probe.
+	% Then build a Protoss Assimilator at the place of the vespene geyser.
 	if a-goal(unitAmount("Protoss Assimilator", 1)), bel(vespeneGeyser(_,_,X,Y)), bel(canBuild("Protoss Assimilator")), bel(aggregate_all(count,friendly("Protoss Probe",ID,_),L), L >= 7)
 		then build("Protoss Assimilator", X, Y).
 		
-	% Gather gas if available if assigned to gather gas
+	% Gather gas if available if assigned to gather gas.
+	% If you have the goal to gather gas, and there is a Protoss Assimilator, start gathering gas.
 	if a-goal(workerActivity(gatheringGas)), bel(friendly("Protoss Assimilator",Id,_))
 		then gather(Id).
 		
