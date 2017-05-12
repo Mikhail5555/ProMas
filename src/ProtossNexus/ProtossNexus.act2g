@@ -1,7 +1,7 @@
 use ProtossNexus as knowledge.
 use "../General/General" as knowledge.
 
-% Trains an unit
+% Trains an unit of Type type.
 define train(Type) with
 	pre { true }
 	post { true }

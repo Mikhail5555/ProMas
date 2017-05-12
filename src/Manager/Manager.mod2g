@@ -4,23 +4,23 @@ order = linearall.
 
 module Manager {
 	
-	% Receive all probes
+	% Receive all probes with their name and Id. This is to keep track of the units.
 	forall (Name).sent(probe(Id)) 
 		do insert(probe(Name, Id)).
 		
-	% If the probe stops to exist, delete it
+	% If the probe stops to exist, delete it from the belief base.
 	if bel(isBuilder(Name, Id), not(probe(Name, Id)))
 		then delete(isBuilder(Name, Id)).
 	
-	% Assign a builder
+	% Assign a builder to build a building. Send this to the assigned unit.
 	if bel(not(isBuilder(Name, Id)), probe(Name, Id))
 		then insert(isBuilder(Name, Id)) + (Name).send(builder).
 		
-	% If the probe stops to exist, delete it
+	% If the probe stops to exist, delete it from the belief base.
 	if bel(isGasCollector(Name, Id), not(probe(Name, Id)))
 		then delete(isGasCollector(Name, Id)).
 	
-	% Assign a GasGather
+	% Assign a GasGather unit to collect gas from the Assimilator. Send this to the assigne unit.
 	if bel(not(isGasCollector(Name, Id)), probe(Name, Id), not(isBuilder(Name, Id)))
 		then insert(isGasCollector(Name, Id)) + (Name).send(gasCollector).
 		

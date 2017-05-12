@@ -12,10 +12,12 @@ module ProtossProbeInit {
 	forall percept(mineralField(Id,Amount,_,_,_)) do insert(mineralField(Id,Amount)) + adopt(gathered(Id)).
 	
 	% Init ConstructionSites
+	% If we percept a constructionSite, then insert this in our belief base.
 	forall percept(constructionSite(X,Y,InPylonRange))
 		do insert(constructionSite(X,Y,InPylonRange)).
 			
-	%Initialize resources
+	%Initialize resources.
+	% If we percept resources, then insert this in our belief base.
 	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
 		then insert(resources(Minerals, Gas, CSupply, MSupply)).
 }
