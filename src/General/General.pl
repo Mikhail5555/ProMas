@@ -12,17 +12,18 @@
  % Goals
  	target/2.		% Target of things you want to build
  
- 
- 
- 
+
 canBuild(Type) :- cost(Type, MCost, GCost, SCost), resources(CurrentMinerals, CurrentGas, CurrentSupply, MaxSupply), CurrentMinerals >= MCost, CurrentGas >= GCost, (CurrentSupply + SCost) =< MaxSupply.
 
 % cost(UnitType, Mineral, Gas, Supply) of units
 
 % Units 
 cost("Protoss Probe", 50, 0, 2).
-cost("Zealot", 100, 0, 4).
+cost("Protoss Zealot", 100, 0, 4).
 
 % Buildings
 cost("Protoss Assimilator", 100, 0, 0).
 cost("Protoss Pylon", 100, 0, 0).
+cost("Protoss Gateway", 150, 0, 0).
+cost("Protoss Forge", 150, 0, 0).
+cost("Protoss Photon Cannon", 150, 0, 0).

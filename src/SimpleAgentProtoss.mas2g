@@ -40,16 +40,28 @@ define protossForge as agent {
 	use ProtossForge.ProtossForgeEvent as event module.
 }
 
+define protossGateway as agent {
+	use protossGateway.protossGateway as main module.
+	use protossGateway.protossGatewayInit as init module.
+	use protossGateway.protossGatewayEvent as event module.
+}
+
 launchpolicy{
 	% Launch the manager
 	when type = manager launch manager.
-	% DO NOT REMOVE THIS LAUNCH RULE
+	
 	% Launch an agent for the main base
 	when type = protossNexus launch mainBase.
+	
 	% Launch a probe agent for each worker
 	when type = protossProbe launch protossProbe.
+	
 	%Launch a ForgeAgent for each forge.
 	when type = protossForge launch protossForge.
-	%Launch a zealot agent
+
+  %Launch a zealot agent
 	when type = protossZealot launch protossZealot.
+
+	% Launch a GatewayAgent for each gateway
+	when type = protossGateway launch protossGateway.
 }

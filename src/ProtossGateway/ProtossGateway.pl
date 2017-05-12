@@ -1,6 +1,7 @@
-:-dynamic 
+:-dynamic 	
 	self/2,			% our own ID from the self/5 percept
 	friendly/3,		% Friendly units
+	queueSize/1,		% The queueSize of the building
 	builder/0,		% This drone is a builder
 	gasCollector/0,		% This drone is a gasCollector
 	mineralField/2, 	% mineralField IDs and amounts from the mineralField/5 percept
