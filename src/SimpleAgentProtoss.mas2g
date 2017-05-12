@@ -27,6 +27,12 @@ define protossProbe as agent {
 	use ProtossProbe.ProtossProbeInit as init module.
 	use ProtossProbe.ProtossProbeEvent as event module.
 } 
+% Define a zealot agent
+define protossZealot as agent {
+	use ProtossZealot.ProtossZealot as main module.
+	use ProtossZealot.ProtossZealotInit as init module.
+	use ProtossZealot.ProtossZealotEvents as event module.
+}
 
 define protossForge as agent {
 	use ProtossForge.ProtossForge as main module.
@@ -44,4 +50,6 @@ launchpolicy{
 	when type = protossProbe launch protossProbe.
 	%Launch a ForgeAgent for each forge.
 	when type = protossForge launch protossForge.
+	%Launch a zealot agent
+	when type = protossZealot launch protossZealot.
 }
