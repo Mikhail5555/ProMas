@@ -3,14 +3,14 @@ use ProtossNexus as knowledge.
 
 module ProtossNexusInit {
 	
-	%Become self aware
+	%Become self aware. If percept self then insert self, the id and type, in the belief base.
 	if percept(self(Id,Type,_,_,_)) then insert(self(Id, Type)).
 		
 	% Target to make the right amount of workers.
 	if true
 		then insert(target("Protoss Probe", 3)).
 		
-	% Initialize resources
+	% Initialize resources. If percept the resources, then insert in the belief base.
 	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
 		then insert(resources(Minerals, Gas, CSupply, MSupply)).
 	
