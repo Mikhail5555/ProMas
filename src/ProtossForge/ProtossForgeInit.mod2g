@@ -8,7 +8,7 @@ module ProtossForgeInit {
 	
 	% Initialize upgrading believe
 	if true 
-		then insert(upgrading(false)).
+		then adopt(upgrading("Protoss Ground Weapons")).
 
 	% Initialize resources
 	if percept(resources(Minerals, Gas, CSupply, MSupply)) 

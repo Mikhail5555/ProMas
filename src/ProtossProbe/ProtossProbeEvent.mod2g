@@ -8,6 +8,14 @@ module ProtossProbeEvent {
 	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) do delete(friendly(Type,Id,Conditions)).
 	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) do insert(friendly(Type,Id,Conditions)).	
 	
+	% Ask manager the base location if not yet known
+	if not(bel(ownBase(_,_)))
+		then (manager).send?(ownBase).
+		
+	% Insert ownBase location into believe
+	if (_).sent:(ownBase(X, Y))
+		then insert(ownBase(X, Y)).
+	
 	% Received builder task from the Manager
 	if (_).sent:(builder)
 		then insert(builder).
@@ -22,8 +30,8 @@ module ProtossProbeEvent {
 		
 	% The handling of the mineralfields	percepts (update amounts).
 	% Amount is always > 1, as mineralFields dissapear from the game when empty.
-	forall bel(mineralField(Id,Amount)), not(percept(mineralField(Id,Amount,_,_,_))) do delete(mineralField(Id,Amount)).
-	forall percept(mineralField(Id,Amount,_,_,_)), not(bel(mineralField(Id,Amount))) do insert(mineralField(Id,Amount)).
+	forall bel(mineralField(Id,Amount,Group,X,Y)), not(percept(mineralField(Id,Amount,Group,X,Y))) do delete(mineralField(Id,Amount,Group,X,Y)).
+	forall percept(mineralField(Id,Amount,Group,X,Y)), not(bel(mineralField(Id,Amount,Group,X,Y))) do insert(mineralField(Id,Amount,Group,X,Y)).
 	
 	% Become aware of all the vespeneGeysers
 	forall percept(vespeneGeyser(Id,Amount,_,X,Y)), not(bel(vespeneGeyser(Id,Amount,X,Y))) 
@@ -46,8 +54,12 @@ module ProtossProbeEvent {
 	if bel(not(target("Protoss Gateway", 1))), bel(builder), bel(resources(_,_, 20,_)), bel(not(friendly("Protoss Gateway", ID, [beingConstructed])))
 		then insert(target("Protoss Gateway", 1)).
 		
+	% If we need an Assimilator, set target to build an Assimilator
+	if bel(not(target("Protoss Gateway", 1))), bel(builder), bel(resources(_,_, 40,_)), bel(not(friendly("Protoss Gateway", ID, [beingConstructed])))
+		then insert(target("Protoss Gateway", 1)).
+		
 	% If we need Forge, set target to build an Forge
-	if bel(not(target("Protoss Forge", 1))), bel(builder), bel(resources(_,_, 50,_)), bel(not(friendly("Protoss Forge", ID, [beingConstructed]))),
+	if bel(not(target("Protoss Forge", 1))), bel(builder), bel(resources(_,_, X,_), X >= 40), bel(not(friendly("Protoss Forge", ID, [beingConstructed]))),
 	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 0)
 		then insert(target("Protoss Forge", 1)).
 	
@@ -60,6 +72,7 @@ module ProtossProbeEvent {
 		then adopt(workerActivity(gatheringGas)).
 	
 	% Check the gathered goals
-	if goal(gathered(Id)), not(bel(mineralField(Id,_))) then insert(gathered(Id)).
+	if goal(gathered(Id)), bel(mineralField(Id,_,_, X1, Y1), ownBase(X2, Y2), distance(X1,Y1,X2,Y2,D), D < 5)
+		then insert(gathered(Id)).
 	
 }

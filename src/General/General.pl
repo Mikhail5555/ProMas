@@ -27,3 +27,6 @@ cost("Protoss Pylon", 100, 0, 0).
 cost("Protoss Gateway", 150, 0, 0).
 cost("Protoss Forge", 150, 0, 0).
 cost("Protoss Photon Cannon", 150, 0, 0).
+
+% Upgrades
+cost("Protoss Ground Weapons", 100, 100, 0).

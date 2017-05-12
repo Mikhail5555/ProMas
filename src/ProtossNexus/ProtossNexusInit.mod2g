@@ -15,6 +15,10 @@ module ProtossNexusInit {
 	if true
 		then insert(queueSize(0)).
 		
+	% Send ownBase location to manager
+	if percept(status(_, _, _ ,_,X, Y))
+		then (manager).send(ownBase(X, Y)).
+		
 	% Initialize resources
 	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
 		then insert(resources(Minerals, Gas, CSupply, MSupply)).

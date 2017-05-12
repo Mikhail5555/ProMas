@@ -5,7 +5,7 @@ use "../General/General" as knowledge.
 module ProtossNexus {
 	
 	% Trains X amount of units in the next, sets resources to 0 because of latency issues
-	if bel(target(Type, Amount), Amount > 0, queueSize(Count), Count =< 1), bel(canBuild(Type)), bel(resources(OldM, OldG, OldS, OldMS))
+	if bel(target(Type, Amount), Amount > 0, queueSize(N), N = 0), bel(canBuild(Type)), bel(resources(OldM, OldG, OldS, OldMS))
 		then train(Type) + delete(target(Type, Amount)) + insert(target(Type, Amount - 1)) + 
 		delete(resources(OldM, OldG, OldS, OldMS)) + insert(resources(0, 0, 0, 0)).
 		

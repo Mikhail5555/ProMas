@@ -5,6 +5,11 @@ use "../General/GeneralEvents" as module.
 
 
 module ProtossNexusEvent {	
+	
+	% Send to the manager if a probe dies
+	forall bel(friendly("Protoss Probe", Id, _)), not(percept(friendly("Protoss Probe", Id, _)))
+		do (manager).send:(death(Id)).
+		
 	% DO NOT REMOVE OR MODIFY THE TWO RULES BELOW
 	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) 
 		do delete(friendly(Type,Id,Conditions)).
@@ -20,7 +25,7 @@ module ProtossNexusEvent {
 		then insert(target("Protoss Probe", 9)).
 		
 	% Update queueSize
-	if  bel(queueSize(Old)), percept(queueSize(New))
+	if bel(queueSize(Old)), percept(queueSize(New))
 		then delete(queueSize(Old)) + insert(queueSize(New)).
 
 		
