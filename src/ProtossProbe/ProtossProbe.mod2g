@@ -11,6 +11,12 @@ module ProtossProbe {
 	% Build Assimilator 
 	if a-goal(unitAmount("Protoss Assimilator", 1)), bel(vespeneGeyser(_,_,X,Y)), bel(canBuild("Protoss Assimilator")), bel(aggregate_all(count,friendly("Protoss Probe",ID,_),L), L >= 7)
 		then build("Protoss Assimilator", X, Y).
+	
+	
+	
+	
+	
+	
 		
 	% Gather gas if available if assigned to gather gas
 	if a-goal(workerActivity(gatheringGas)), bel(friendly("Protoss Assimilator",Id,_))

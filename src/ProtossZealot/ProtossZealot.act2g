@@ -1,0 +1,13 @@
+use ProtossZealot as knowledge.
+
+define attack(ID) with
+	pre{ true}
+	post{ true }
+	
+define move(X,Y) with 
+	pre{true}
+	post{true}
+	
+define attack(X,Y) with
+	pre{true}
+	post{true}

@@ -8,4 +8,5 @@ module ProtossForgeEvent {
 	forall percept(upgrading(Upgrade)), not(bel(upgrading(Upgrade))) do insert(upgrading(Upgrade)).
 	forall bel(upgrading(Upgrade)), not(percept(upgrade(Upgrading))) do delete(upgrading(Upgrade)).
 	
+	if true then insert(upgraded("hi")).
 }

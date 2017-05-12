@@ -1,0 +1,24 @@
+use ProtossZealot as knowledge.
+use "../General/GeneralEvents" as module.
+
+module ProtossZealotEvents {
+	if true then GeneralEvents.
+	
+	%send always for the friendlt percept.
+	forall percept(friendly(Type, Id, Condition)), not(bel(friendly(Type,Id,Condition))) do insert(friendly(Type,Id,Condition)).
+	forall bel(friendly(Type, Id, Condition)), not(percept(friendly(Type, Id, Condition))) do delete(friendly(Type, Id, Condition)).
+	
+	
+	
+	%send on change percept for the status percept
+	if percept(status(NewHealth, NewShield, NewEnergy, NewCond, NewX, NewY)), bel(status(OldHealth, OldShield, OldEnergy, OldCond, OldX, OldY)) then 
+		delete(status(OldHealth, OldShield, OldEnergy, OldCond, OldX, OldY)) + insert(status(NewHealth, NewShield, NewEnergy, NewCond, NewX, NewY)).
+	
+	
+	if percept(attacking(Id, TargetId)) then insert(attacking(Id, TargetId)).
+	
+	
+	
+	
+	
+}

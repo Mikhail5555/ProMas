@@ -1,15 +1,14 @@
 use "StarCraft Connector.jar" as environment with
+	starcraft_location="C:\Starcraft",
 	map="(2)Destination.scx",
 	own_race="Protoss",
-	starcraft_location="C:\Starcraft",
 	auto_menu="Single_Player",
 	enemy_race="random",
 	debug="true", % launch the developer tool
 	invulnerable="true", % individual assignment only
 	game_speed=50. % default tournament speed
 
-
-% Define the Manager
+%Define the Manager
 define manager as agent {
 	use Manager.Manager as main module.
 }
