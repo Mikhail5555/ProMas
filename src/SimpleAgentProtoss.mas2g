@@ -1,15 +1,14 @@
 use "StarCraft Connector.jar" as environment with
+	starcraft_location="C:\Starcraft",
 	map="(2)Destination.scx",
 	own_race="Protoss",
-	starcraft_location="C:\Starcraft",
 	auto_menu="Single_Player",
 	enemy_race="random",
 	debug="true", % launch the developer tool
 	invulnerable="true", % individual assignment only
 	game_speed=50. % default tournament speed
 
-
-% Define the Manager
+%Define the Manager
 define manager as agent {
 	use Manager.Manager as main module.
 }
@@ -28,6 +27,12 @@ define protossProbe as agent {
 	use ProtossProbe.ProtossProbeInit as init module.
 	use ProtossProbe.ProtossProbeEvent as event module.
 } 
+% Define a zealot agent
+define protossZealot as agent {
+	use ProtossZealot.ProtossZealot as main module.
+	use ProtossZealot.ProtossZealotInit as init module.
+	use ProtossZealot.ProtossZealotEvents as event module.
+}
 
 define protossForge as agent {
 	use ProtossForge.ProtossForge as main module.
@@ -53,7 +58,10 @@ launchpolicy{
 	
 	%Launch a ForgeAgent for each forge.
 	when type = protossForge launch protossForge.
-	
+
+  %Launch a zealot agent
+	when type = protossZealot launch protossZealot.
+
 	% Launch a GatewayAgent for each gateway
 	when type = protossGateway launch protossGateway.
 }

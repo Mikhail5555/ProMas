@@ -1,0 +1,6 @@
+use ProtossZealot as actionspec.
+use ProtossZealot as knowledge.
+
+module ProtossZealot {
+	if true then insert(true).
+}
