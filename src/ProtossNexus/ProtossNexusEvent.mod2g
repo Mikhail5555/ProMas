@@ -1,19 +1,27 @@
-use "../General/General" as knowledge.
-use "../General/GeneralEvents" as module.
 use ProtossNexus as knowledge.
 use ProtossNexus as actionspec.
+use "../General/General" as knowledge.
+use "../General/GeneralEvents" as module.
 
 
 module ProtossNexusEvent {	
 	% DO NOT REMOVE OR MODIFY THE TWO RULES BELOW
-	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) do delete(friendly(Type,Id,Conditions)).
-	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) do insert(friendly(Type,Id,Conditions)).	
-	
+	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) 
+		do delete(friendly(Type,Id,Conditions)).
+	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) 
+		do insert(friendly(Type,Id,Conditions)).	
+		
 	% Run the general events
 	if true
 		then GeneralEvents.	
 	
-	% Buildes additional probes after Assimitalor is completed
-	if bel(aggregate_all(count,friendly("Protoss Probe",Id,_),L), L = 7), bel(aggregate_all(count,friendly("Protoss Assimilator",Id,_),K), K = 1)
-		then insert(target("Protoss Probe", 4)).
+	% Buildes additional probes after Gateway is completed
+	if bel(aggregate_all(count,friendly("Protoss Probe",Id,_),L), L =< 10), bel(aggregate_all(count,friendly("Protoss Gateway",Id,_),K), K = 1), bel(not((target("Protoss Probe", N), N > 0)))
+		then insert(target("Protoss Probe", 9)).
+		
+	% Update queueSize
+	if  bel(queueSize(Old)), percept(queueSize(New))
+		then delete(queueSize(Old)) + insert(queueSize(New)).
+
+		
 }

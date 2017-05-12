@@ -1,7 +1,7 @@
 use ProtossGateway as knowledge.
 use "../General/General" as knowledge.
 
-% train action spec.
-define train(EntityId) with
-	pre {true}
-	post {true}
+% Train action spec.
+define train(Type) with
+	pre { true }
+	post { true }

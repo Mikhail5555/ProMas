@@ -1,5 +1,7 @@
 use ProtossForge as knowledge.
+use "../General/General" as knowledge.
 
+% Action upgrade spec
 define upgrade(Id) with
-	pre{ upgrading(false) }
-	post{ true }
+	pre { upgrading(false) }
+	post { true }

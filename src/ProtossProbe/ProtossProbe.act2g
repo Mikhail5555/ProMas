@@ -1,7 +1,6 @@
-use "../General/General" as knowledge.
 use ProtossProbe as knowledge.
+use "../General/General" as knowledge.
 
-% The gather action:
 % Only execute if the field is not already gathered.
 define gather(Id) with
 	pre { not(gathered(Id)) }

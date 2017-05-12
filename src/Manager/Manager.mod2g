@@ -1,5 +1,5 @@
-use "../General/General" as knowledge.
 use Manager as knowledge.
+use "../General/General" as knowledge.
 order = linearall.
 
 module Manager {
@@ -23,4 +23,9 @@ module Manager {
 	% Assign a GasGather
 	if bel(not(isGasCollector(Name, Id)), probe(Name, Id), not(isBuilder(Name, Id)))
 		then insert(isGasCollector(Name, Id)) + (Name).send(gasCollector).
+		
+	% Assign a second GasGatherer
+	if bel(aggregate_all(count,isGasCollector(_, Id), N), N < 3, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
+		then insert(isGasCollector(Name, Id)) + (Name).send(gasCollector).
+	
 }

@@ -3,9 +3,10 @@ use ProtossGateway as actionspec.
 use "../General/General" as knowledge.
 
 module ProtossNexus {
-	% HACK to have at least something here: you may remove this when using the agent.
-	if percept(winner) then print("Winner!").
-
-	% keep training zealots as long as we have enough resources.
-	if bel(resources(M,G,C,T)), bel(M > 100), not(bel(true)) then train("Protoss Zealot").
+	
+	% Trains X amount of units in the next, sets resources to 0 because of latency issues
+	if bel(target(Type, Amount), Amount > 0, queueSize(Count), Count =< 1), bel(canBuild(Type)), bel(resources(OldM, OldG, OldS, OldMS))
+		then train(Type) + delete(target(Type, Amount)) + insert(target(Type, Amount - 1)) + 
+		delete(resources(OldM, OldG, OldS, OldMS)) + insert(resources(0, 0, 0, 0)).
+		
 }
