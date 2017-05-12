@@ -1,9 +1,12 @@
 use ProtossForge as knowledge.
+use ProtossForge as actionspec.
 use "../General/General" as knowledge.
 
 % Does nothing yet
 module ProtossForge {
 	
-	if true then insert(true).
+	% Start an upgrade
+	if a-goal(upgrading(Name)), bel(canBuild(Name))
+		then upgrade(Name).
 	
 }

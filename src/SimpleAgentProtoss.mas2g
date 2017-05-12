@@ -3,10 +3,10 @@ use "StarCraft Connector.jar" as environment with
 	map="(2)Destination.scx",
 	own_race="Protoss",
 	auto_menu="Single_Player",
-	enemy_race="random",
+	enemy_race="terran",
 	debug="true", % launch the developer tool
-	invulnerable="true", % individual assignment only
-	game_speed=50. % default tournament speed
+	invulnerable="false", % individual assignment only
+	game_speed=100. % default tournament speed
 
 %Define the Manager
 define manager as agent {

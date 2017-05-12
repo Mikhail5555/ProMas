@@ -9,7 +9,7 @@ module ProtossProbeInit {
 	
 	% Initial storage of the mineral field identifiers (amounts are updated in event).
 	% Also adopt the goal to fully mine each mineral field.
-	forall percept(mineralField(Id,Amount,_,_,_)) do insert(mineralField(Id,Amount)) + adopt(gathered(Id)).
+	forall percept(mineralField(Id,Amount,Group,X,Y)) do insert(mineralField(Id,Amount,Group,X,Y)) + adopt(gathered(Id)).
 	
 	% Init ConstructionSites
 	% If we percept a constructionSite, then insert this in our belief base.

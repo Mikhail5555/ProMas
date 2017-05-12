@@ -4,28 +4,49 @@ order = linearall.
 
 module Manager {
 	
+	%%---- Units ----%%%
+	
 	% Receive all probes with their name and Id. This is to keep track of the units.
 	forall (Name).sent(probe(Id)) 
 		do insert(probe(Name, Id)).
+	
+	% Get to know our starter location of the base
+	if (_).sent:(ownBase(X, Y))
+		then insert(ownBase(X, Y)).
+		
+	% If a drone has died, delete him from believes.
+	forall (_).sent:(death(Id)), bel(probe(Name, Id)) 
+		do delete(probe(Name, Id)).
+	
+	% Receive all zealots with their name and Id.
+	forall (_).sent(isReady(Id)) 
+		do insert(isReady(Id)).
+		
+	%%---- Probes ----%%%
 		
 	% If the probe stops to exist, delete it from the belief base.
 	if bel(isBuilder(Name, Id), not(probe(Name, Id)))
 		then delete(isBuilder(Name, Id)).
 	
-	% Assign a builder to build a building. Send this to the assigned unit.
-	if bel(not(isBuilder(Name, Id)), probe(Name, Id))
+	% Assign a second GasGatherer
+	if bel(aggregate_all(count,isBuilder(_, Id), N), N < 1, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
 		then insert(isBuilder(Name, Id)) + (Name).send(builder).
 		
 	% If the probe stops to exist, delete it from the belief base.
 	if bel(isGasCollector(Name, Id), not(probe(Name, Id)))
 		then delete(isGasCollector(Name, Id)).
 	
-	% Assign a GasGather unit to collect gas from the Assimilator. Send this to the assigne unit.
-	if bel(not(isGasCollector(Name, Id)), probe(Name, Id), not(isBuilder(Name, Id)))
+	% Assign a second GasGatherer
+	if bel(aggregate_all(count,isGasCollector(_, Id), N), N < 2, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
 		then insert(isGasCollector(Name, Id)) + (Name).send(gasCollector).
 		
-	% Assign a second GasGatherer
-	if bel(aggregate_all(count,isGasCollector(_, Id), N), N < 3, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
-		then insert(isGasCollector(Name, Id)) + (Name).send(gasCollector).
+	%%---- Attacking ----%%%
+	
+	% If someone askes for the base location send this to them.
+	forall (Name).sent?(ownBase), bel(ownBase(X, Y))
+		do (Name).send:(ownBase(X, Y)).
+	
+	% When we have an army of 10 units attack the enemy.
+	forall bel(readyForAttack) do allother.send(attack).
 	
 }

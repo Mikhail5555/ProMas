@@ -3,5 +3,5 @@ use "../General/General" as knowledge.
 
 % Action upgrade spec
 define upgrade(Id) with
-	pre { upgrading(false) }
+	pre { true }
 	post { true }

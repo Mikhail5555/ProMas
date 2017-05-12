@@ -4,18 +4,13 @@ use "../General/General" as knowledge.
 use "../General/GeneralEvents" as module.
 
 module ProtossGatewayEvent {
-	% DO NOT REMOVE OR MODIFY THE TWO RULES BELOW
-	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) 
-		do delete(friendly(Type,Id,Conditions)).
-	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) 
-		do insert(friendly(Type,Id,Conditions)).	
-
 	% Run the general module
 	if true
 		then GeneralEvents.
 		
 	% Update queueSize
-	if  bel(queueSize(Old)), percept(queueSize(New))
+	if bel(queueSize(Old)), percept(queueSize(New))
 		then delete(queueSize(Old)) + insert(queueSize(New)).
+
 
 }
