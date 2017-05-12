@@ -4,24 +4,17 @@ order = linearall.
 module GeneralEvents {
 	
 	% Update resources
-	% The amount of minerals, gas and supply available to the player. TS is total supply.
-	% If the resources change in amounts, we update the our beliefs.
-	if percept(resources(NewM, NewG, NewS, NewMS)), bel(resources(OldM, OldG, OldS, OldMS))
+	if bel(resources(OldM, OldG, OldS, OldMS)), percept(resources(NewM, NewG, NewS, NewMS))
 		then delete(resources(OldM, OldG, OldS, OldMS)) + insert(resources(NewM, NewG, NewS, NewMS)).
 		
-	% Update the unitAmount
-	% If the unitAmount is percept, and not in the beliefs, we add this to our beliefs.
-	% The other way arount, we will delete it from our belief base.
-	forall percept(unitAmount(Type,Count)), not(bel(unitAmount(Type,Count)))
-		do insert(unitAmount(Type,Count)).
-	forall bel(unitAmount(Type,Count)),not(percept(unitAmount(Type,Count)))
-		do delete(unitAmount(Type,Count)).
+	% Update unitAmount
+	if bel(unitAmount(Type,Old)), percept(unitAmount(Type,New))
+		then delete(unitAmount(Type,Old)) + insert(unitAmount(Type,New)).
 		
 	% Update the constructionSites
-	% If we percept a constructionSite and we not have it in our beliefs, we add it.
-	% The other way around, we will delete it from the belief base.
 	forall percept(constructionSite(X, Y, InPylonRange)), not(bel(constructionSite(X,Y, InPylonRange))) 
 		do insert(constructionSite(X,Y, InPylonRange)).
 	forall bel(constructionSite(X,Y, InPylonRange)),not(percept(constructionSite(X,Y, InPylonRange))) 
 		do delete(constructionSite(X,Y, InPylonRange)).
+		
 }

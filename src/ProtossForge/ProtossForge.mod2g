@@ -1,6 +1,9 @@
-
 use ProtossForge as knowledge.
+use "../General/General" as knowledge.
 
+% Does nothing yet
 module ProtossForge {
+	
 	if true then insert(true).
+	
 }

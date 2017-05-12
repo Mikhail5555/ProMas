@@ -8,11 +8,11 @@ module ProtossProbeEvent {
 	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) do delete(friendly(Type,Id,Conditions)).
 	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) do insert(friendly(Type,Id,Conditions)).	
 	
-	% Received builder task from the Manager, then add it to the belief base.
+	% Received builder task from the Manager
 	if (_).sent:(builder)
 		then insert(builder).
 		
-	% Received gasCollector task from the Manager and add it to the belief base.
+	% Received gasCollector task from the Manager
 	if (_).sent:(gasCollector)
 		then insert(gasCollector).
 		
@@ -21,29 +21,41 @@ module ProtossProbeEvent {
 		then GeneralEvents.	
 		
 	% The handling of the mineralfields	percepts (update amounts).
-	% Amount is always >1, as mineralFields dissapear from the game when empty.
+	% Amount is always > 1, as mineralFields dissapear from the game when empty.
 	forall bel(mineralField(Id,Amount)), not(percept(mineralField(Id,Amount,_,_,_))) do delete(mineralField(Id,Amount)).
 	forall percept(mineralField(Id,Amount,_,_,_)), not(bel(mineralField(Id,Amount))) do insert(mineralField(Id,Amount)).
 	
-	% Become aware of all the vespeneGeysers.
-	% If you percept a geyser and you don`t have it in your belief base, then add it.
+	% Become aware of all the vespeneGeysers
 	forall percept(vespeneGeyser(Id,Amount,_,X,Y)), not(bel(vespeneGeyser(Id,Amount,X,Y))) 
 		do insert(vespeneGeyser(Id,Amount,X,Y)).
 	
 	% The handling of the workerActivity percept
-	% Update the workerActivity it there are changes and delete the old belief.
 	if percept(workerActivity(NewActivity)), bel(workerActivity(OldActivity), NewActivity \= OldActivity) 
 		then delete(workerActivity(OldActivity)) + insert(workerActivity(NewActivity)).
+			
+	% If we need a Pylon, set target to build an Pylon
+	if bel(not(target("Protoss Pylon", 1))), bel(builder), bel(resources(_,_,Y,X), Y + 4 >= X), bel(not(friendly("Protoss Pylon", ID, [beingConstructed])))
+		then insert(target("Protoss Pylon", 1)).
+			
+	% If we need a Gateway, set target to build an Gateway
+	if bel(not(target("Protoss Assimilator", 1))), bel(builder), bel(resources(_,_, X,_), X >= 24), bel(not(friendly("Protoss Assimilator", ID, [beingConstructed]))), 
+	bel(aggregate_all(count,friendly("Protoss Assimilator",ID,_),L), L = 0), bel(vespeneGeyser(_,_,_,_))
+		then insert(target("Protoss Assimilator", 1)).
+
+	% If we need an Assimilator, set target to build an Assimilator
+	if bel(not(target("Protoss Gateway", 1))), bel(builder), bel(resources(_,_, 20,_)), bel(not(friendly("Protoss Gateway", ID, [beingConstructed])))
+		then insert(target("Protoss Gateway", 1)).
+		
+	% If we need Forge, set target to build an Forge
+	if bel(not(target("Protoss Forge", 1))), bel(builder), bel(resources(_,_, 50,_)), bel(not(friendly("Protoss Forge", ID, [beingConstructed]))),
+	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 0)
+		then insert(target("Protoss Forge", 1)).
 	
+	% BUILD CANNONS!
+	if bel(not(target("Protoss Photon Cannon", 1))), bel(builder),bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L < 6), bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 1)
+		then insert(target("Protoss Photon Cannon", 1)).
+		
 	% If we need gas set target to build an Assimilator
-	if not(goal(unitAmount("Protoss Assimilator", 1))), bel(builder, vespeneGeyser(_,_,_,_)) 
-		then adopt(unitAmount("Protoss Assimilator", 1)).
-		
-	% If we need Pylon, set target to build an Pylon, of the resources are sufficient.
-	if not(goal(unitAmount("Protoss Pylon", 1))), bel(builder), bel(resources(_,_,Y,X), Y + 4 >= X)
-		then adopt(unitAmount("Protoss Pylon", 1)).
-		
-	% If we need gas and we have a Protoss Assimilator and a  gas collector, then adopt the goal to gather gas.
 	if bel(friendly("Protoss Assimilator",ID,_)), bel(gasCollector)
 		then adopt(workerActivity(gatheringGas)).
 	

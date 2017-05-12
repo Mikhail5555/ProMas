@@ -1,8 +1,17 @@
 use ProtossForge as knowledge.
+use "../General/General" as knowledge.
 
 module ProtossForgeInit {
-	if true then insert(upgrading(false)).
 	
-	if true then insert(resources(0,0)).
+	% Become self aware
+	if percept(self(Id,Type,_,_,_)) then insert(self(Id, Type)).
+	
+	% Initialize upgrading believe
+	if true 
+		then insert(upgrading(false)).
+
+	% Initialize resources
+	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
+		then insert(resources(Minerals, Gas, CSupply, MSupply)).
 	
 }

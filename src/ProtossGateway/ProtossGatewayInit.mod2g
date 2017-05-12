@@ -1,16 +1,20 @@
-use ProtossNexus as knowledge.
+use ProtossGateway as knowledge.
 use "../General/General" as knowledge.
 
-module ProtossNexusInit {
+module ProtossGatewayInit {	
 	
-	%Become self aware
+	% Become self aware
 	if percept(self(Id,Type,_,_,_)) 
 		then insert(self(Id, Type)).
-		
+
 	% Target to make the right amount of workers.
 	if true
-		then insert(target("Protoss Probe", 6)).
-		
+		then insert(target("Protoss Zealot", 3)).
+	
+	% Sets the probe about as goal
+	if bel(target(Type, Amount))
+		then adopt(unitAmount(Type, Amount)).
+			
 	% Initialize QueueSize
 	if true
 		then insert(queueSize(0)).
@@ -18,9 +22,5 @@ module ProtossNexusInit {
 	% Initialize resources
 	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
 		then insert(resources(Minerals, Gas, CSupply, MSupply)).
-	
-	% Sets the probe about as goal
-	if bel(target("Protoss Probe", Amount))
-		then adopt(unitAmount("Protoss Probe", Amount)).
-	
+		
 }
