@@ -1,0 +1,5 @@
+use ProtossGateway as knowledge.
+
+module ProtossGatewayInit {	
+	if true then print("gateway init").
+}

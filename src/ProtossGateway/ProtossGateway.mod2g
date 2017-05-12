@@ -1,0 +1,11 @@
+use ProtossGateway as knowledge.
+use ProtossGateway as actionspec.
+use "../General/General" as knowledge.
+
+module ProtossNexus {
+	% HACK to have at least something here: you may remove this when using the agent.
+	if percept(winner) then print("Winner!").
+
+	% keep training zealots as long as we have enough resources.
+	if bel(resources(M,G,C,T)), bel(M > 100), not(bel(true)) then train("Protoss Zealot").
+}
