@@ -1,0 +1,17 @@
+Initial Build Order:
+8 - Pylon
+10 - Gate
+11 - Assimilator
+13 - Cybernetecs Core
+15 - Pylon
+18 - Dragoon (build continually from now on until you have four or five)
+20 - Dragoon Range Upgrade
+21 - Pylon
+26 - Robotics Facility (when 200 gas)
+29 - Pylon
+34 - Observatory; build Observer when it finishes
+37 - Nexus at Natural
+Continue pumping Dragoons / Probes + Adding Pylons
+Your Robotics will finish about when Dragoon Range is done at 33 / 34 supply. At that point you should have about 3-4 Dragoons and can pressure or contain the Terran.
+
+Scout somewhere
