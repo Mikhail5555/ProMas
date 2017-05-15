@@ -10,10 +10,12 @@
  	vespeneGeyser/4,	% Locations of verspeneGeysers
  
  % Goals
- 	target/2.		% Target of things you want to build
+ 	target/2,		% Target of things you want to build
  % Constructionsite
-	constructionSite/3.
- 
+	constructionSite/3,
+	sqrt/2,
+	abs/2.
+
 
 canBuild(Type) :- cost(Type, MCost, GCost, SCost), resources(CurrentMinerals, CurrentGas, CurrentSupply, MaxSupply), CurrentMinerals >= MCost, CurrentGas >= GCost, (CurrentSupply + SCost) =< MaxSupply.
 
@@ -22,7 +24,7 @@ canBuild(Type) :- cost(Type, MCost, GCost, SCost), resources(CurrentMinerals, Cu
 distance(X1,Y1,X2,Y2, Distance) :-
     abs(X1-X2, X3),
     abs(Y1-Y2, Y3),
-     sqrt(X3*X3 + Y3*Y3, Distance).
+    sqrt(X3*X3 + Y3*Y3, Distance).
 
 
 %returns the construction sites which have atleast 5 distance from the chokepoint.
