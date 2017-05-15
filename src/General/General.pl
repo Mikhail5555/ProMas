@@ -12,19 +12,14 @@
  % Goals
  	target/2,		% Target of things you want to build
  % Constructionsite
-	constructionSite/3,
-	sqrt/2,
-	abs/2.
+	constructionSite/3.
 
 
 canBuild(Type) :- cost(Type, MCost, GCost, SCost), resources(CurrentMinerals, CurrentGas, CurrentSupply, MaxSupply), CurrentMinerals >= MCost, CurrentGas >= GCost, (CurrentSupply + SCost) =< MaxSupply.
 
 
 %the calculation of distance between two coordinates.
-distance(X1,Y1,X2,Y2, Distance) :-
-    abs(X1-X2, X3),
-    abs(Y1-Y2, Y3),
-    sqrt(X3*X3 + Y3*Y3, Distance).
+distance(X1,Y1,X2,Y2,D) :- D is sqrt((X2-X1)**2 + (Y2-Y1)**2).	
 
 
 %returns the construction sites which have atleast 5 distance from the chokepoint.
