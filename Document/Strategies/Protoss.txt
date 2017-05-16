@@ -1,0 +1,13 @@
+9/10: Pylon
+12/18: Gateway
+14/18: Assimilator
+15/18: Assimilator (max out gas as soon as you can afford a Cybernetics Core)
+16/18: Cybernetics Core
+17/18: Pylon
+19/26: Zealot
+20/26: Warp Gate Research (Chrono Boost this exactly two times during its research. This will make sure Warp Gate tech has finished and all Gateways have morphed into Warp Gates as soon as the Dark Shrine has finished).
+20/26: Twilight Council
+22/26: Zealot
+22/26: Pylon
+23/26: Gateway x3
+24/34: Dark Shrine
