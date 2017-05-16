@@ -21,7 +21,7 @@ module ProtossProbe {
 		then gather(Id).
 		
 	% If we need to gather minerals, and we're not doing anything, start gathering minerals.
-	if goal(gathered(Id)), bel(workerActivity(idling)) 
+	if goal(gathered(Id)), bel(workerActivity(idling)),  bel(mineralField(Id,_,_, X1, Y1), ownBase(X2, Y2), distance(X1,Y1,X2,Y2,D), D < 20)
 		then gather(Id).
 	
 }

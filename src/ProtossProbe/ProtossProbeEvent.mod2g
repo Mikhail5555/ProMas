@@ -72,7 +72,7 @@ module ProtossProbeEvent {
 		then adopt(workerActivity(gatheringGas)).
 	
 	% Check the gathered goals
-	if goal(gathered(Id)), bel(mineralField(Id,_,_, X1, Y1), ownBase(X2, Y2), distance(X1,Y1,X2,Y2,D), D < 5)
+	if goal(gathered(Id)), not(bel(mineralField(Id,_,_, X1, Y1)))
 		then insert(gathered(Id)).
 	
 }
