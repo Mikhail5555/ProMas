@@ -19,16 +19,14 @@ use ProtossZealot.ProtossZealot as actionspec.
 use ProtossGateway.ProtossGateway as actionspec.
 use ProtossForge.ProtossForge as actionspec.
 
-
-test SimpleAgentProtoss with
+test Manager with
 	pre{ true }
 	in{
 		percept(self(Id,Type,_,_,_)) leadsto bel(self(Id,Type,_,_,_) ).
-		bel(target(Type, Amount)) leadsto goal(target(Type, Amount)).
-		
+		bel(target(Type, Amount)) leadsto goal(target(Type, Amount)).	
 	}
 	post{ true }
-	
-SimpleAgentProtoss {
-	do main.
+
+manager {
+	do Manager.
 }
