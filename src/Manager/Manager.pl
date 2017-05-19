@@ -5,4 +5,4 @@
 	isGasCollector/2,	% A probe is assigned to be a gas collector
 	isReady/1.		% A Unit is ready for attacking
 	
-readyForAttack :- aggregate_all(count, isReady(Id), N), N >= 30.
+readyForAttack :- aggregate_all(count, isReady(Id), N), N >= 10.
