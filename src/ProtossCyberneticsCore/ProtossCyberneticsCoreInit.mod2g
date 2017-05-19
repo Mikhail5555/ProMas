@@ -1,0 +1,13 @@
+use ProtossCyberneticsCore as knowledge.
+use "../General/General" as knowledge.
+
+module ProtossCyberneticsCoreInit {
+	
+
+	% Become self aware
+	if percept(self(Id,Type,_,_,_)) then insert(self(Id, Type)).
+
+	% Initialize resources
+	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
+		then insert(resources(Minerals, Gas, CSupply, MSupply)).
+}

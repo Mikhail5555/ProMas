@@ -1,0 +1,7 @@
+use ProtossStargate as knowledge.
+use "../General/General" as knowledge.
+
+% Train action spec.
+define train(Type) with
+	pre { true }
+	post { true }

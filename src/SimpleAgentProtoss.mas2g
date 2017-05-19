@@ -46,6 +46,18 @@ define protossGateway as agent {
 	use protossGateway.protossGatewayEvent as event module.
 }
 
+define protossCyberneticsCore as agent {
+	use protossCyberneticsCore.protossCyberneticsCore as main module.
+	use protossCyberneticsCore.protossCyberneticsCoreInit as init module.
+	use protossCyberneticsCore.protossCyberneticsCoreEvent as event module.
+}
+
+define protossStargate as agent {
+	use protossStargate.protossStargate as main module.
+	use protossStargate.protossStargateInit as init module.
+	use protossStargate.protossStargateEvent as event module.
+}
+
 launchpolicy{
 	% Launch the manager
 	when type = manager launch manager.
@@ -64,4 +76,10 @@ launchpolicy{
 
 	% Launch a GatewayAgent for each gateway
 	when type = protossGateway launch protossGateway.
+	
+	% Launch a CyberneticsCoreAgent for each CyberneticsCore
+	when type = protossCyberneticsCore launch protossCyberneticsCore.
+	
+	% Launch a StargateAgent for each Stargate.
+	when type = protossStargate launch protossStargate.
 }
