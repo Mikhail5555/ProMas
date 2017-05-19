@@ -11,27 +11,32 @@ test ProtossNexus with
 	in{ 
 		%%% Star 1 %%%
 		% Check if some worker is carrying minerals at some point.
-		eventually bel(friendly(Type,_,Conditions), member(Type,['Terran SCV','Protoss Probe','Zerg Drone']), 
+		eventually bel(friendly(Type,_,Conditions), member(Type,['Protoss Probe']), 
 						member(carrying,Conditions)).
 		%%% Star 2 %%%
 		% Check if we trained at least 3 more workers (on top of the initial 4).
 		% For Zerg we also count the buildings a worker could have morphed into already.
-		eventually bel(aggregate_all(count,(friendly(Type,ID,_), member(Type,['Terran SCV','Protoss Probe','Zerg Drone','Zerg Extractor','Zerg Spawning Pool'])),L), 
+		eventually bel(aggregate_all(count,(friendly(Type,ID,_), member(Type,['Protoss Probe'])),L), 
 						L >= 7).
 		%%% Star 3 %%%
 		% Check if we obtained at least 100 gas.
 		eventually percept(resources(_,Gas,_,_), Gas >= 100).
 		% Check if we trained at least 4 more workers again (on top of the initial 7 we should have had for star 2).
 		% Some Zerg drones should have morphed into the mentioned buildings at this point.  
-		eventually bel(aggregate_all(count,(friendly(Type,ID,_), member(Type,['Terran SCV','Protoss Probe','Zerg Drone','Zerg Extractor','Zerg Spawning Pool'])),L), 
+		eventually bel(aggregate_all(count,(friendly(Type,ID,_), member(Type,['Protoss Probe'])),L), 
 						L >= 11).
 		%%% Star 4 %%%
 		% Check if we built sufficient offensive units (depening on the race).
-		eventually bel( (aggregate_all(count,friendly('Terran Marine',ID,_),L), L >= 10)
-					  ; (aggregate_all(count,friendly('Protoss Zealot',ID,_),L), L >= 7)
-					  ; (aggregate_all(count,friendly('Zerg Zergling',ID,_),L), L >= 20) ).
+		eventually bel( (aggregate_all(count,friendly('Protoss Zealot',ID,_),L), L >= 7)).
 		%%% Star 5 %%%
 		% Cannot test here: be as quick as possible with all the above :)
+		
+		
+		% Our own tests
+		
+		
+		
+		
 	}
 
 mainBase {
