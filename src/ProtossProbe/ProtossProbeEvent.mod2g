@@ -58,14 +58,25 @@ module ProtossProbeEvent {
 	if bel(not(target("Protoss Gateway", 1))), bel(builder), bel(resources(_,_, 40,_)), bel(not(friendly("Protoss Gateway", ID, [beingConstructed])))
 		then insert(target("Protoss Gateway", 1)).
 		
+	if bel(base(_,_,false,_)) then print("hello nigger").
+	
 	% If we need Forge, set target to build an Forge
-	if bel(not(target("Protoss Forge", 1))), bel(builder), bel(resources(_,_, X,_), X >= 40), bel(not(friendly("Protoss Forge", ID, [beingConstructed]))),
+	if bel(not(target("Protoss Forge", 1))), bel(builder), bel(resources(_,_, X,_), X >= 40), not(bel(friendly("Protoss Forge", ID, [beingConstructed]))),
 	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 0)
 		then insert(target("Protoss Forge", 1)).
 	
+	% If we meet the requirements build a nexus.	
+	if not(bel(target("Protoss Nexus", 1))), bel(builder), bel(resources(_,_, X,_), X >= 500), not(bel(friendly("Protoss Nexus", ID, [beingConstructed]))),
+	bel(aggregate_all(count,friendly("Protoss Nexus",ID,_),L), L = 1)
+		then insert(target("Protoss Nexus", 1)) + print ("inserted target").
+	
 	% BUILD CANNONS!
-	if bel(not(target("Protoss Photon Cannon", 1))), bel(builder),bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L < 6), bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 1)
-		then insert(target("Protoss Photon Cannon", 1)).
+	if bel(chokepoint(X1,Y1), ownBase(X3,Y3), defenseSpot(X1,Y1,X3,Y3,X2,Y2)) then insert(target("Protoss Photon Cannon", 1)). 
+	
+	
+	
+	%if bel(not(target("Protoss Photon Cannon", 1))), bel(builder),bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L < 6), bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 1)
+	%	then insert(target("Protoss Photon Cannon", 1)).
 		
 	% If we need gas set target to build an Assimilator
 	if bel(friendly("Protoss Assimilator",ID,_)), bel(gasCollector)

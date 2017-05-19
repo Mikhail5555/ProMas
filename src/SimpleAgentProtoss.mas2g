@@ -1,5 +1,5 @@
 use "StarCraft Connector.jar" as environment with
-	starcraft_location="C:\Starcraft",
+	starcraft_location="D:\Starcraft",
 	map="(2)Destination.scx",
 	own_race="Protoss",
 	auto_menu="Single_Player",

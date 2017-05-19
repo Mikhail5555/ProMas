@@ -12,7 +12,7 @@ module Manager {
 	
 	% Get to know our starter location of the base
 	if (_).sent:(ownBase(X, Y))
-		then insert(ownBase(X, Y)).
+		then insert(ownBase(X, Y)). 
 		
 	% If a drone has died, delete him from believes.
 	forall (_).sent:(death(Id)), bel(probe(Name, Id)) 

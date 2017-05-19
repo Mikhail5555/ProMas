@@ -26,7 +26,7 @@ distance(X1,Y1,X2,Y2,D) :- D is sqrt((X2-X1)**2 + (Y2-Y1)**2).
 withinChoke(ChokeX, ChokeY, X, Y) :- 
     constructionSite(X, Y, _),
     distance(X, Y, ChokeX,ChokeY, Distance),
-    Distance < 5.
+    Distance < 20.
 
 % returns the construction sites near a chokepoint which are near the constructionSites but on the base side. 
 defenseSpot(ChokeX, ChokeY, BaseX, BaseY, X, Y) :-
@@ -45,6 +45,7 @@ cost("Protoss Probe", 50, 0, 2).
 cost("Protoss Zealot", 100, 0, 4).
 
 % Buildings
+cost("Protoss Nexus", 400, 0, 0).
 cost("Protoss Assimilator", 100, 0, 0).
 cost("Protoss Pylon", 100, 0, 0).
 cost("Protoss Gateway", 150, 0, 0).
