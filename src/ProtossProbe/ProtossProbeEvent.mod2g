@@ -4,12 +4,8 @@ use "../General/GeneralEvents" as module.
 
 module ProtossProbeEvent {
 	
-	% Find all friendly Units
-	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) do delete(friendly(Type,Id,Conditions)).
-	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) do insert(friendly(Type,Id,Conditions)).	
-	
 	% Ask manager the base location if not yet known
-	if not(bel(ownBase(_,_)))
+	if not(bel(ownBase(_,_))) 
 		then (manager).send?(ownBase).
 		
 	% Insert ownBase location into believe
@@ -23,6 +19,14 @@ module ProtossProbeEvent {
 	% Received gasCollector task from the Manager
 	if (_).sent:(gasCollector)
 		then insert(gasCollector).
+		
+	% Find all friendly Units
+	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))),
+	bel(not((Type = "Protoss Probe"))), bel(not((Type = "Protoss Zealot")))
+		do delete(friendly(Type,Id,Conditions)).
+	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))),
+	bel(not((Type = "Protoss Probe"))), bel(not((Type = "Protoss Zealot")))
+		do insert(friendly(Type,Id,Conditions)).
 		
 	% Run the general module
 	if true
@@ -64,7 +68,8 @@ module ProtossProbeEvent {
 		then insert(target("Protoss Forge", 1)).
 	
 	% BUILD CANNONS!
-	if bel(not(target("Protoss Photon Cannon", 1))), bel(builder),bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L < 6), bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 1)
+	if bel(not(target("Protoss Photon Cannon", 1))), bel(builder),bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L < 6), 
+	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 1)
 		then insert(target("Protoss Photon Cannon", 1)).
 		
 	% If we need gas set target to build an Assimilator
