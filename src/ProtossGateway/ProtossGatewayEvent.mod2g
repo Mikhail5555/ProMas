@@ -11,6 +11,4 @@ module ProtossGatewayEvent {
 	% Update queueSize
 	if bel(queueSize(Old)), percept(queueSize(New))
 		then delete(queueSize(Old)) + insert(queueSize(New)).
-
-
 }
