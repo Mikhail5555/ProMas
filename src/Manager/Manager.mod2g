@@ -34,7 +34,7 @@ module Manager {
 		
 		
 	if bel(aggregate_all(count,isScout(_, Id), N), N < 1, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
-		then insert(isBuilder(Name, Id)) + (Name).send(scout).
+		then insert(isScout(Name, Id)) + (Name).send(scout).
 			
 	
 	% If the probe stops to exist, delete it from the belief base.

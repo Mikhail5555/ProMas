@@ -5,6 +5,9 @@ use "../General/General" as knowledge.
 module ProtossProbe {
 	
 	
+	if goal(visited(X, Y)) then move(X, Y).
+	
+	
 	% Build NExus
 	if bel(target(Type, Amount), Amount > 0, base(X,Y, _, _), Type = "Protoss Nexus"), not(bel(ownBase(X,Y)))
 		then build(Type,X,Y) + delete(target(Type,Amount)) + insert(target(Type, Amount -1)) + print("I wanna build nexus").

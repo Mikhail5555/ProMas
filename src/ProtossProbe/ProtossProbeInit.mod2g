@@ -9,6 +9,8 @@ module ProtossProbeInit {
 	
 	forall percept(base(X,Y,IsStart, RegionId)) do insert(base(X,Y,IsStart,RegionId)).
 	
+	if true then insert(status(100,100,100,100,100,100)).
+	
 	% Initial storage of the mineral field identifiers (amounts are updated in event).
 	% Also adopt the goal to fully mine each mineral field.
 	forall percept(mineralField(Id,Amount,Group,X,Y)) do insert(mineralField(Id,Amount,Group,X,Y)) + adopt(gathered(Id)).

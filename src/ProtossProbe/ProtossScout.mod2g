@@ -1,0 +1,11 @@
+use ProtossProbe as knowledge.
+use "../General/General" as knowledge.
+
+module ProtossScout {
+	forall bel(base(X, Y, _, _)), not(bel(ownBase(X,Y)))
+		 do adopt(visited(X, Y)).
+	
+	if goal(visited(X, Y)), bel(status(_,_,_,_, X1, Y1), distance(X,Y,X1,Y1,D), D < 5) then insert(visited(X, Y)).
+	
+	
+}

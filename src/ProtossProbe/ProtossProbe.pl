@@ -10,7 +10,8 @@
 	base/4,			% Locations of all the potential base locations.
 	chokepoint/2,
 	visited/2,
-	scout/0.
+	scout/0,
+	status/6.
 
 
 
