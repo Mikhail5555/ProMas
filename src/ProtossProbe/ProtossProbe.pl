@@ -8,7 +8,9 @@
 	workerActivity/1,	% our own activity state from the workerActivity/1 percept
 	gathered/1,		% used as a goal to gather mineralFields
 	base/4,			% Locations of all the potential base locations.
-	chokepoint/2.
+	chokepoint/2,
+	visited/2,
+	scout/0.
 
 
 

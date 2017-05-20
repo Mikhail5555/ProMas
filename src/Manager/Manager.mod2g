@@ -29,15 +29,20 @@ module Manager {
 		then delete(isBuilder(Name, Id)).
 	
 	% Assign a second GasGatherer
-	if bel(aggregate_all(count,isBuilder(_, Id), N), N < 1, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
+	if bel(aggregate_all(count,isBuilder(_, Id), N), N < 1, probe(Name, Id), not(isScout(Name,Id)), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
 		then insert(isBuilder(Name, Id)) + (Name).send(builder).
 		
+		
+	if bel(aggregate_all(count,isScout(_, Id), N), N < 1, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
+		then insert(isBuilder(Name, Id)) + (Name).send(scout).
+			
+	
 	% If the probe stops to exist, delete it from the belief base.
 	if bel(isGasCollector(Name, Id), not(probe(Name, Id)))
 		then delete(isGasCollector(Name, Id)).
 	
 	% Assign a second GasGatherer
-	if bel(aggregate_all(count,isGasCollector(_, Id), N), N < 2, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
+	if bel(aggregate_all(count,isGasCollector(_, Id), N), N < 2, probe(Name, Id), not(isScout(Name,Id)),  not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
 		then insert(isGasCollector(Name, Id)) + (Name).send(gasCollector).
 		
 	%%---- Attacking ----%%%

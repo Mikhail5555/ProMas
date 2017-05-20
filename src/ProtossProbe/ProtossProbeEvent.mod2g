@@ -20,6 +20,9 @@ module ProtossProbeEvent {
 	if (_).sent:(builder)
 		then insert(builder).
 		
+	forall (_).sent:(scout), bel(base(X,Y,_,_))
+		do insert(scout) + adopt(visited(X,Y)).
+		
 	% Received gasCollector task from the Manager
 	if (_).sent:(gasCollector)
 		then insert(gasCollector).
