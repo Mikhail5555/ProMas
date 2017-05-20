@@ -6,27 +6,40 @@ module ProtossProbeBuilder {
 	% If we need a Pylon, set target to build an Pylon
 	if bel(not(target("Protoss Pylon", 1))), bel(resources(_,_,Y,X), Y + 4 >= X), bel(not(friendly("Protoss Pylon", ID, [beingConstructed])))
 		then insert(target("Protoss Pylon", 1)).
+		
+	if bel(not(target("Protoss Pylon", 1))), bel(resources(_,_,Y,X), Y > 50, Y + 8 >= X), bel(not(friendly("Protoss Pylon", ID, [beingConstructed])))
+		then insert(target("Protoss Pylon", 1)).
 			
 	% If we meet the requirements build a nexus.	
-	if not(bel(target("Protoss Nexus", 1))), bel(resources(X, _,_,_), X >= 500), not(bel(friendly("Protoss Nexus", ID, [beingConstructed])))
-		then insert(target("Protoss Nexus", 1)) + print ("inserted target").
+	if not(bel(target("Protoss Nexus", 1))), bel(resources(X, _,_,_), X >= 500), bel(not(friendly("Protoss Nexus", ID, [beingConstructed])))
+		then insert(target("Protoss Nexus", 1)).
+		
+	% If we need a Assimilator, set target to build an Assimilator
+	if bel(not(target("Protoss Assimilator", 1))), bel(builder), bel(resources(_,_, X,_), X >= 24), bel(not(friendly("Protoss Assimilator", ID, [beingConstructed]))), 
+	bel(aggregate_all(count,friendly("Protoss Assimilator",ID,_),L), L = 0), bel(vespeneGeyser(_,_,_,_))
+		then insert(target("Protoss Assimilator", 1)).
 
-	% If we need an Assimilator, set target to build an Assimilator
+	%  If we need a Gateway, set target to build an Gateway
 	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, 20,_)), bel(not(friendly("Protoss Gateway", ID, [beingConstructed])))
 		then insert(target("Protoss Gateway", 1)).
 		
-	% If we need an Assimilator, set target to build an Assimilator
+	%  If we need a Gateway, set target to build an Gateway
 	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, 40,_)), bel(not(friendly("Protoss Gateway", ID, [beingConstructed])))
+		then insert(target("Protoss Gateway", 1)).
+		
+	%  If we need more Gateway, set target to build an Gateway
+	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, N,_), N > 50), bel(not(friendly("Protoss Gateway", ID, [beingConstructed]))),
+	bel(aggregate_all(count,friendly("Protoss Gateway",ID,_),L), L < 6)	
 		then insert(target("Protoss Gateway", 1)).
 		
 	% If we need Forge, set target to build an Forge
 	if bel(not(target("Protoss Forge", 1))), bel(resources(_,_, X,_), X >= 40), bel(not(friendly("Protoss Forge", ID, [beingConstructed]))),
-	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 0)
+	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L < 2)
 		then insert(target("Protoss Forge", 1)).
 	
 	% BUILD CANNONS!
-	if bel(not(target("Protoss Photon Cannon", 1))),bel(aggregate_all(count,friendly("Protoss Photon Cannon",ID,_),L), L < 6), 
-	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 1)
+	if bel(not(target("Protoss Photon Cannon", 1))), bel(aggregate_all(count,friendly("Protoss Photon Cannon",ID,_),L), L =< 6), 
+	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),N), N >= 1)
 		then insert(target("Protoss Photon Cannon", 1)).
 	
 }

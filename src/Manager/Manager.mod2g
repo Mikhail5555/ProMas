@@ -19,12 +19,24 @@ module Manager {
 		do delete(probe(Name, Id)).
 	
 	% Receive all zealots with their name and Id.
-	forall (_).sent(isReady(Id)) 
+	forall (_).sent:(isReady(Id)) 
 		do insert(isReady(Id)).
+		
+	% remove all zealots with their name and Id once they are send to attack.
+	forall (_).sent:(attacking(Id)) 
+		do delete(isReady(Id)).
+	
+	% Receive the enemybase location when discovered.			
+	forall (_).sent:(enemyLocation(X, Y))
+		do insert(enemyBase(X, Y)).
 		
 	% If someone askes for the base location send this to them.
 	forall (Name).sent?(ownBase), bel(ownBase(X, Y))
 		do (Name).send:(ownBase(X, Y)).
+		
+	% If someone askes for the base location send this to them.
+	forall (Name).sent?(enemyBase), bel(enemyBase(X, Y))
+		do (Name).send:(enemyBase(X, Y)).
 		
 	%%---- Probes ----%%%
 		
@@ -40,11 +52,11 @@ module Manager {
 		
 	% Scout %	
 	% If the probe stops to exist, delete it from the belief base.
-	if bel(isScout(Name, Id), not(isScout(Name, Id)))
-		then delete(isScout(Name, Id)).	
+	%if bel(isScout(Name, Id), not(isScout(Name, Id)))
+	%	then delete(isScout(Name, Id)).	
 		
 	% Assign N Scouts
-	if bel(aggregate_all(count,isScout(_, Id), N), N < 1, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
+	if bel(aggregate_all(count,isScout(_, Id), N), N < 1, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)), not(enemyBase(_,_)))
 		then insert(isScout(Name, Id)) + (Name).send(scout).	
 	
 	
@@ -61,5 +73,5 @@ module Manager {
 	
 	% When we have an army of 10 units attack the enemy.
 	forall bel(readyForAttack) do allother.send(attack).
-	
+		
 }

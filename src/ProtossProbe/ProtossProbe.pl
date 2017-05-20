@@ -11,6 +11,7 @@
 	chokepoint/2,
 	visited/2,
 	scout/0,
+	enemyRace/1,
 	status/6.
 
 

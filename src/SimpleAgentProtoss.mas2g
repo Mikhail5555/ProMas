@@ -1,9 +1,10 @@
 use "StarCraft Connector.jar" as environment with
 	starcraft_location="C:\Starcraft",
-	map="(2)Destination.scx",
+%   map="(4)Circuit Breaker.scx",
+    map="(2)Destination.scx",
 	own_race="Protoss",
 	auto_menu="Single_Player",
-	enemy_race="terran",
+	enemy_race="random",
 	debug="true", % launch the developer tool
 	invulnerable="false", % individual assignment only
 	game_speed=100. % default tournament speed

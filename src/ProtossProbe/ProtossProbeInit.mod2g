@@ -12,9 +12,13 @@ module ProtossProbeInit {
 	forall percept(base(X, Y, IsStart, RegionId)) 
 		do insert(base(X, Y, IsStart,RegionId)).
 	
-	% Insert Status percept into believe
+	% Insert Status percept into believe.
 	if percept(status(Health, Shield, Energy, Cond, X, Y)) 
 		then insert(status(Health, Shield, Energy, Cond, X, Y)).
+		
+	% Insert enemyRace percept into believe.
+	if percept(enemyRace(Race))
+		then insert(enemyRace(Race)).
 	
 	% Initial storage of the mineral field identifiers (amounts are updated in event).
 	forall percept(mineralField(Id,Amount,Group,X,Y)) 

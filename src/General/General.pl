@@ -11,6 +11,8 @@
  
  % Goals
  	target/2,		% Target of things you want to build
+	enemyRace/1,		% The EnemyRace
+
  % Constructionsite
 	constructionSite/3.
 
@@ -54,3 +56,4 @@ cost("Protoss Photon Cannon", 150, 0, 0).
 
 % Upgrades
 cost("Protoss Ground Weapons", 100, 100, 0).
+cost("Protoss Ground Armor", 100, 100, 0).

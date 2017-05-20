@@ -19,11 +19,11 @@ module ProtossProbeEvent {
 		then insert(builder).
 	
 	% Receive Scount task for the Manager.	
-	if (_).sent(scout)
+	if (_).sent(scout), bel(aggregate_all(count,(base(_, _, true, _)),L), L > 2)
 		then insert(scout).
 		
-	forall (_).sent:(scout), bel(base(X,Y,_,_))
-		do insert(scout) + adopt(visited(X,Y)).
+	% forall (_).sent:(scout), bel(base(X,Y, true,_))
+	%	do insert(scout) + adopt(visited(X,Y)).
 		
 	% Received gasCollector task from the Manager
 	if (_).sent:(gasCollector)
@@ -61,7 +61,7 @@ module ProtossProbeEvent {
 		then delete(workerActivity(OldActivity)) + insert(workerActivity(NewActivity)).
 	
 	% Run the Scout module if scout.
-	if bel(scout) 
+	if bel(scout, ownBase(_,_))
 		then ProtossProbeScout.
 		
 	% Run the Builder module if Builder.
