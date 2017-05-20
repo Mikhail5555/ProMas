@@ -1,5 +1,6 @@
 use ProtossProbe as knowledge.
 use ProtossScout as module.
+use ProtossProbeBuilder as module.
 use "../General/General" as knowledge.
 use "../General/GeneralEvents" as module.
 
@@ -20,10 +21,11 @@ module ProtossProbeEvent {
 	if (_).sent:(ownBase(X, Y))
 		then insert(ownBase(X, Y)).
 	
-	% Received builder task from the Manager
+	% Receive Builder task from the Manager.
 	if (_).sent:(builder)
 		then insert(builder).
-		
+	
+	% Receive Scount task for the Manager.	
 	if (_).sent(scout)
 		then insert(scout).
 		
@@ -34,11 +36,13 @@ module ProtossProbeEvent {
 	if (_).sent:(gasCollector)
 		then insert(gasCollector).
 		
-	if bel(scout) then ProtossScout.
-		
 	% Run the general module
 	if true
 		then GeneralEvents.	
+	
+	% Run the Scout module if scout.
+	if bel(scout) 
+		then ProtossScout.
 		
 	% The handling of the mineralfields	percepts (update amounts).
 	% Amount is always > 1, as mineralFields dissapear from the game when empty.
@@ -57,11 +61,9 @@ module ProtossProbeEvent {
 	if bel(not(target("Protoss Pylon", 1))), bel(builder), bel(resources(_,_,Y,X), Y + 4 >= X), bel(not(friendly("Protoss Pylon", ID, [beingConstructed])))
 		then insert(target("Protoss Pylon", 1)).
 			
-
 	% If we meet the requirements build a nexus.	
 	if not(bel(target("Protoss Nexus", 1))), bel(builder), bel(resources(X, _,_,_), X >= 500), not(bel(friendly("Protoss Nexus", ID, [beingConstructed])))
 		then insert(target("Protoss Nexus", 1)) + print ("inserted target").
-	
 
 	% If we need gas set target to build an Assimilator
 	if bel(friendly("Protoss Assimilator",ID,_)), bel(gasCollector)

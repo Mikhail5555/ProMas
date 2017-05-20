@@ -5,13 +5,13 @@ use "../General/General" as knowledge.
 module ProtossProbe {
 	
 	
+	
 	if goal(visited(X, Y)) then move(X, Y).
 	
 	
-	% Build NExus
+	% Build Nexus
 	if bel(target(Type, Amount), Amount > 0, base(X,Y, _, _), Type = "Protoss Nexus"), not(bel(ownBase(X,Y)))
 		then build(Type,X,Y) + delete(target(Type,Amount)) + insert(target(Type, Amount -1)) + print("I wanna build nexus").
-	
 	
 	% Build Assimilator 
 	if bel(target(Type, Amount), Amount > 0), bel(vespeneGeyser(_,_,X,Y)), bel(canBuild(Type)), bel((Type = "Protoss Assimilator"))
