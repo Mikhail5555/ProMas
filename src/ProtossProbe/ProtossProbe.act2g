@@ -10,3 +10,8 @@ define gather(Id) with
 define build(Id, X, Y) with
 	pre { true }
 	post { true }
+	
+% Move to an location.
+define move(X, Y) with
+	pre { true }
+	post { true }

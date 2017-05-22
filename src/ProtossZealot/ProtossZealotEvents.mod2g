@@ -11,6 +11,14 @@ module ProtossZealotEvents {
 	% Insert ownBase location into believe
 	if (_).sent:(ownBase(X, Y))
 		then insert(ownBase(X, Y)).
+		
+	% Ask manager the base location if not yet known
+	if not(bel(enemyBase(_,_)))
+		then (manager).send?(enemyBase).
+		
+	% Insert ownBase location into believe
+	if (_).sent:(enemyBase(X, Y))
+		then insert(enemyBase(X, Y)).
 	
 	% Find all friendly Units
 	% forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) do delete(friendly(Type,Id,Conditions)).
@@ -31,18 +39,19 @@ module ProtossZealotEvents {
 		do delete(enemy(Type, Id, Health, Shields)).
 		
 	% Find the only place enemy can be (On small map)
-	if not(bel(enemyBase(_, _))), bel(base(X2, Y2, true), ownBase(X1, Y1), distance(X2, Y2, X1, Y1, D), D > 30)
+	if not(bel(enemyBase(_, _))), bel(base(X2, Y2, true), ownBase(X1, Y1), distance(X2, Y2, X1, Y1, D), D > 30), 
+	bel(aggregate_all(count,(base(_, _, true)),L), L = 2)
 		then insert(enemyBase(X2, Y2)).
 	
 	% When near base, send to manager that you are ready.
 	if bel(not(isReady(_)), ownBase(X1, Y1), status(_,_,_,_,X2,Y2), distance(X1,Y1,X2,Y2,D), D < 30, self(Id, _, _, _, _))
-		then (manager).send(isReady(Id)) + insert(isReady(Id)) + print("I am ready to serve").
+		then (manager).send:(isReady(Id)) + insert(isReady(Id)).
 	
 	%%%--- Attacking ---%%%
 	
 	% Received attack task from the Manager
-	if (_).sent(attack)
-		then insert(attack).	
+	if (_).sent(attack), bel(self(Id, _, _, _, _))
+		then insert(attack) + (manager).send:(attacking(Id)).	
 	
 	% When ready insert attack the X, Y of enemy base
 	if not(goal(attack(X, Y))), bel(attack, enemyBase(X, Y))

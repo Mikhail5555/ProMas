@@ -1,0 +1,18 @@
+use ProtossProbe as knowledge.
+use "../General/General" as knowledge.
+
+module ProtossProbeScout {
+	
+	% If there is an enemy next to an starting position this is the enemy base.
+	if percept(enemy(_,_,_,_,_, X1, Y1)), bel(visited(X, Y), distance(X, Y, X1, Y1, D), D < 20) 
+		then (manager).send:(enemyLocation(X, Y)).
+	
+	% Adopt goal to visit any base location that isn't ours
+	forall bel(base(X, Y, true, _)), not(bel(ownBase(X, Y)))
+		 do adopt(visited(X, Y)).
+
+	% When base has been visited mark this base as visited.
+	if goal(visited(X, Y)), bel(status(_,_,_,_, X1, Y1), distance(X, Y, X1, Y1, D), D < 5) 
+		then insert(visited(X, Y)).
+	
+}
