@@ -1,7 +1,7 @@
 use "StarCraft Connector.jar" as environment with
 	starcraft_location="C:\Starcraft",
-    map="(4)Circuit Breaker.scx",
-    %map="(2)Destination.scx",
+    %map="(4)Circuit Breaker.scx",
+    map="(2)Destination.scx",
 	own_race="Protoss",
 	auto_menu="Single_Player",
 	enemy_race="Zerg",
