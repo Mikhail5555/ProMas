@@ -5,6 +5,7 @@
 	attack/2,
 	attack/0,	
 	attacking/0,
+	attack/1,
 	
 	% Status
 	status/6,

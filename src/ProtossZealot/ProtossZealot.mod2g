@@ -10,4 +10,5 @@ module ProtossZealot {
 	% If your goal is to attack and you aren't attacking, continue to attack
 	if goal(attack(X, Y)), bel(attack, not(attacking)) then attack(X, Y) + insert(attacking).
 	
+	if goal(attack(ID)), bel(attack) then attack(ID) + insert(attacking).
 }

@@ -57,6 +57,7 @@ module ProtossZealotEvents {
 	if not(goal(attack(X, Y))), bel(attack, enemyBase(X, Y))
 		then adopt(attack(X, Y)).
 	
-	
+	if bel(attack), percept(enemy(Type, Id, Health, Shields))
+		then adopt(attack(Id)).
 	
 }

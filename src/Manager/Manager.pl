@@ -7,5 +7,5 @@
 	isScout/2,		% A probe is Assigned to scout
 	isReady/1.		% A Unit is ready for attacking
 	
-readyForAttack :- aggregate_all(count, isReady(Id), N), N >= 12.
+readyForAttack :- aggregate_all(count, isReady(Id), N), N >= 18.
 
