@@ -42,6 +42,13 @@ test ProtossNexus with
 		eventually percept("Protoss Zealot").
 		eventually percept("Protoss Stargate").
 		eventually percept("Protoss Cybernetics Core").
+		
+		eventually percept(resources(Minerals, _, _, _), Minerals >= 50).
+		eventually percept(resources(Minerals, _, _, _), Minerals >= 100).
+		eventually percept(resources(Minerals, _, _, _), Minerals >= 150).
+
+		
+		
 	}
 
 mainBase {
