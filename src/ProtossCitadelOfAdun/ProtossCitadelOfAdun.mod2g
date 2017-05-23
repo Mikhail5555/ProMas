@@ -1,0 +1,11 @@
+use ProtossCitadelOfAdun as knowledge.
+use ProtossCitadelOfAdun as actionspec.
+use "../General/General" as knowledge.
+
+module ProtossCitadelOfAdun {
+
+	
+	% Start an upgrade
+	if a-goal(upgrading(Name)), bel(canBuild(Name))
+		then upgrade(Name).	
+}

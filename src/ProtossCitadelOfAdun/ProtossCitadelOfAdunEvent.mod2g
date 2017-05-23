@@ -1,0 +1,16 @@
+use ProtossCitadelOfAdun as knowledge.
+use "../General/General" as knowledge.
+use "../General/GeneralEvents" as module.
+
+module ProtossCitadelOfAdun {
+	
+	% Run the general module
+	if true
+		then GeneralEvents.
+	
+	% Update the upgrading percept
+	if percept(upgrading(New)), bel(upgrading(Old)) 
+		then delete(upgrading(Old)) + insert(upgrading(New)).
+
+	
+}

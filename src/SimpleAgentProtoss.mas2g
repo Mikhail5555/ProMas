@@ -59,6 +59,12 @@ define protossStargate as agent {
 	use protossStargate.protossStargateEvent as event module.
 }
 
+define protossCitadelOfAdun as agent {
+	use protossCitadelOfAdun.protossCitadelOfAdun as main module.
+	use protossCitadelOfAdun.protossCitadelOfAdunEvent as event module. 
+	use protossCitadelOfAdun.protossCitadelOfAdunInit as init module.
+}
+
 launchpolicy{
 	% Launch the manager
 	when type = manager launch manager.
@@ -83,4 +89,7 @@ launchpolicy{
 	
 	% Launch a StargateAgent for each Stargate.
 	when type = protossStargate launch protossStargate.
+	
+	% Launch a CitadelOfAdunAgent for each CItadelOfAdun
+	when type = protossCitadelOfAdun launch protossCitadelOfAdun.
 }

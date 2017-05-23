@@ -1,0 +1,7 @@
+use ProtossCitadelOfAdun as knowledge.
+use "../General/General" as knowledge.
+
+% Action upgrade spec
+define upgrade(Id) with
+	pre { true }
+	post { true }
