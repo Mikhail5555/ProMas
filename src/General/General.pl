@@ -45,6 +45,7 @@ defenseSpot(ChokeX, ChokeY, BaseX, BaseY, X, Y) :-
 % Units 
 cost("Protoss Probe", 50, 0, 2).
 cost("Protoss Zealot", 100, 0, 4).
+cost("Protoss Dragoon", 150, 50, 4).
 
 % Buildings
 cost("Protoss Nexus", 400, 0, 0).
@@ -53,7 +54,12 @@ cost("Protoss Pylon", 100, 0, 0).
 cost("Protoss Gateway", 150, 0, 0).
 cost("Protoss Forge", 150, 0, 0).
 cost("Protoss Photon Cannon", 150, 0, 0).
+cost("Protoss Cybernetics Core", 200, 0, 0).
+cost("Protoss Stargate", 150, 150, 0).
+cost("Protoss Citadel of Adun", 150, 100, 0).
+cost("Protoss Templar Archives", 150, 200, 0).
 
 % Upgrades
 cost("Protoss Ground Weapons", 100, 100, 0).
 cost("Protoss Ground Armor", 100, 100, 0).
+cost("Singularity Charge", 150, 150, 0).

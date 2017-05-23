@@ -11,4 +11,10 @@ module ProtossGatewayEvent {
 	% Update queueSize
 	if bel(queueSize(Old)), percept(queueSize(New))
 		then delete(queueSize(Old)) + insert(queueSize(New)).
+		
+	if bel(aggregate_all(count,friendly("Protoss Zealot",ID,_),L), L < 9)
+		then insert(target("Protoss Zealot", 1)).
+	
+	if bel(aggregate_all(count,friendly("Protoss Dragoon",ID,_),L), L < 3)
+		then insert(target("Protoss Dragoon", 1)).	
 }

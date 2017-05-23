@@ -19,27 +19,33 @@ module ProtossProbeBuilder {
 	bel(aggregate_all(count,friendly("Protoss Assimilator",ID,_),L), L = 0), bel(vespeneGeyser(_,_,_,_))
 		then insert(target("Protoss Assimilator", 1)).
 
-	%  If we need a Gateway, set target to build an Gateway
+	%  If we need a Gateway, set target to build a Gateway
 	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, 20,_)), bel(not(friendly("Protoss Gateway", ID, [beingConstructed])))
 		then insert(target("Protoss Gateway", 1)).
 		
+	%  If we need a Gateway, set target to build a Gateway
+	if bel(not(target("Protoss Cybernetics Core", 1))), bel(resources(_,_, X,_), X >= 42), bel(not(friendly("Protoss Cybernetics Core", ID, [beingConstructed]))),
+		bel(aggregate_all(count,friendly("Protoss Cybernetics Core",ID,_),L), L < 1)
+		then insert(target("Protoss Cybernetics Core", 1)).
+
 	%  If we need a Gateway, set target to build an Gateway
-	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, 40,_)), bel(not(friendly("Protoss Gateway", ID, [beingConstructed])))
+	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, X,_), X >= 48), bel(not(friendly("Protoss Gateway", ID, [beingConstructed]))),
+	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L < 3)	
 		then insert(target("Protoss Gateway", 1)).
 		
 	%  If we need more Gateway, set target to build an Gateway
-	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, N,_), N > 50), bel(not(friendly("Protoss Gateway", ID, [beingConstructed]))),
-	bel(aggregate_all(count,friendly("Protoss Gateway",ID,_),L), L < 6)	
-		then insert(target("Protoss Gateway", 1)).
+	%if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, N,_), N > 50), bel(not(friendly("Protoss Gateway", ID, [beingConstructed]))),
+	%bel(aggregate_all(count,friendly("Protoss Gateway",ID,_),L), L < 6)	
+	%	then insert(target("Protoss Gateway", 1)).
 		
 	% If we need Forge, set target to build an Forge
-	if bel(not(target("Protoss Forge", 1))), bel(resources(_,_, X,_), X >= 40), bel(not(friendly("Protoss Forge", ID, [beingConstructed]))),
-	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L < 2)
+	if bel(not(target("Protoss Forge", 1))), bel(resources(_,_, X,_), X >= 30), bel(not(friendly("Protoss Forge", ID, [beingConstructed]))),
+	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L < 1)
 		then insert(target("Protoss Forge", 1)).
 	
 	% BUILD CANNONS!
 	if bel(not(target("Protoss Photon Cannon", 1))), bel(aggregate_all(count,friendly("Protoss Photon Cannon",ID,_),L), L =< 6), 
-	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),N), N >= 1)
+	bel(aggregate_all(count,friendly("Protoss Cybernetics Core",ID,_),N), N >= 1)
 		then insert(target("Protoss Photon Cannon", 1)).
 	
 }

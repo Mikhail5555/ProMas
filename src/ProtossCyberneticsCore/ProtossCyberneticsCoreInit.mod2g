@@ -10,4 +10,7 @@ module ProtossCyberneticsCoreInit {
 	% Initialize resources
 	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
 		then insert(resources(Minerals, Gas, CSupply, MSupply)).
+		
+	if true 
+		then adopt(upgrading("Singularity Charge")).	
 }

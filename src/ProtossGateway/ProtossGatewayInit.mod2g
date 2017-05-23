@@ -8,8 +8,8 @@ module ProtossGatewayInit {
 		then insert(self(Id, Type)).
 
 	% Target to make the right amount of workers.
-	if true
-		then insert(target("Protoss Zealot", 20)).
+	%if true
+	%	then insert(target("Protoss Zealot", 20)).
 	
 	% Sets the probe about as goal
 	if bel(target(Type, Amount))
