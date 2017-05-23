@@ -33,10 +33,15 @@ test ProtossNexus with
 		
 		
 		% Our own tests
-		
-		
-		
-		
+		eventually percept("Protoss Probe").
+		eventually percept("Protoss Pylon").
+		eventually percept("Protoss Assimilator").
+		eventually percept("Protoss Forge").
+		eventually percept("Protoss Nexus").
+		eventually percept("Protoss Gateway").
+		eventually percept("Protoss Zealot").
+		eventually percept("Protoss Stargate").
+		eventually percept("Protoss Cybernetics Core").
 	}
 
 mainBase {
