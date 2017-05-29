@@ -1,10 +1,10 @@
 use "StarCraft Connector.jar" as environment with
 	starcraft_location="C:\Starcraft",
-%   map="(4)Circuit Breaker.scx",
+    %map="(4)Circuit Breaker.scx",
     map="(2)Destination.scx",
 	own_race="Protoss",
 	auto_menu="Single_Player",
-	enemy_race="Protoss",
+	enemy_race="Terran",
 	debug="true", % launch the developer tool
 	invulnerable="false", % individual assignment only
 	game_speed=50. % default tournament speed
@@ -63,6 +63,12 @@ define protossStargate as agent {
 	use protossStargate.protossStargateEvent as event module.
 }
 
+define protossDragoon as agent {
+	use protossDragoon.protossDragoon as main module.
+	use protossDragoon.protossDragoonInit as init module.
+	use protossDragoon.protossDragoonEvents as event module.
+}
+
 launchpolicy{
 	% Launch the manager
 	when type = manager launch manager.
@@ -87,4 +93,6 @@ launchpolicy{
 	
 	% Launch a StargateAgent for each Stargate.
 	when type = protossStargate launch protossStargate.
+	
+	when type = protossDragoon launch protossDragoon.
 }

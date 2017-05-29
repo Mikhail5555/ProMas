@@ -1,0 +1,14 @@
+use ProtossDragoon as knowledge.
+
+module ProtossDragoonInit {
+	
+	% Store our own identifier and initial state (updated in event).
+	if percept(self(Id, UnitType, MaxHealth, MaxShield, MaxEnergy)) then insert(self(Id, UnitType, MaxHealth, MaxShield, MaxEnergy)).
+
+	% Receive all base locations
+	forall percept(base(X,Y,Start,_)) do insert(base(X,Y,Start)).
+	
+	% Store your own status
+	if percept(status(Health, Shield, Energy, Cond, X, Y)) then insert(status(Health, Shield, Energy, Cond, X, Y)).
+	
+}

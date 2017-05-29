@@ -23,4 +23,6 @@ module ProtossGatewayEvent {
 	if bel(aggregate_all(count,friendly("Protoss Zealot",Id,_),L), L =< 10), bel(not((target("Protoss Zealot", N), N > 0)))
 		then insert(target("Protoss Zealot", 1)).
 	
+	if bel(aggregate_all(count,friendly("Protoss Dragoon",ID,_),L), L < 3)
+		then insert(target("Protoss Dragoon", 1)).	
 }

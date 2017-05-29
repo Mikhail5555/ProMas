@@ -1,0 +1,16 @@
+use ProtossDragoon as knowledge.
+
+% attack action
+define attack(ID) with
+	pre { true }
+	post { true }
+	
+% move action
+define move(X,Y) with 
+	pre { true }
+	post { true }
+
+% attack at nearest coordinate action
+define attack(X,Y) with
+	pre { true }
+	post { true }
