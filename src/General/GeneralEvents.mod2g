@@ -11,10 +11,6 @@ module GeneralEvents {
 	if bel(enemyRace(Old)), percept(enemyRace(New))
 		then delete(enemyRace(Old)) + insert(enemyRace(New)).
 		
-	% Update unitAmount
-	if bel(unitAmount(Type,Old)), percept(unitAmount(Type,New))
-		then delete(unitAmount(Type,Old)) + insert(unitAmount(Type,New)).
-		
 	% Update the constructionSites
 	forall percept(constructionSite(X, Y, InPylonRange)), not(bel(constructionSite(X,Y, InPylonRange))) 
 		do insert(constructionSite(X,Y, InPylonRange)).

@@ -9,7 +9,7 @@ module ProtossNexusInit {
 		
 	% Target to make the right amount of workers.
 	if true
-		then insert(target("Protoss Probe", 6)).
+		then insert(target("Protoss Probe", 4)).
 		
 	% Initialize QueueSize
 	if true
@@ -22,9 +22,5 @@ module ProtossNexusInit {
 	% Initialize resources
 	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
 		then insert(resources(Minerals, Gas, CSupply, MSupply)).
-	
-	% Sets the probe about as goal
-	if bel(target("Protoss Probe", Amount))
-		then adopt(unitAmount("Protoss Probe", Amount)).
 	
 }

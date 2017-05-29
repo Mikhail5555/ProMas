@@ -9,11 +9,7 @@ module ProtossGatewayInit {
 
 	% Target to make the right amount of workers.
 	if true
-		then insert(target("Protoss Zealot", 20)).
-	
-	% Sets the probe about as goal
-	if bel(target(Type, Amount))
-		then adopt(unitAmount(Type, Amount)).
+		then insert(target("Protoss Zealot", 3)).
 			
 	% Initialize QueueSize
 	if true
