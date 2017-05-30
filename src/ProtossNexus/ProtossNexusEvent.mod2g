@@ -21,8 +21,16 @@ module ProtossNexusEvent {
 		then GeneralEvents.	
 	
 	% Buildes additional probes after Gateway is completed
-	if bel(aggregate_all(count,friendly("Protoss Probe",Id,_),L), L =< 10), bel(aggregate_all(count,friendly("Protoss Gateway",Id,_),K), K = 1), bel(not((target("Protoss Probe", N), N > 0)))
-		then insert(target("Protoss Probe", 9)).
+	if bel(aggregate_all(count,friendly("Protoss Probe",Id,_), 8)), bel(friendly("Protoss Pylon", _, [beingConstructed])), bel(target("Protoss Probe", N), N =< 0)
+		then insert(target("Protoss Probe", 4)).
+
+	% Buildes additional probes after Gateway is completed
+	if bel(aggregate_all(count,friendly("Protoss Probe",Id,_),L), L = 12), bel(aggregate_all(count,friendly("Protoss Gateway",Id,[beingConstructed]),K), K = 1), bel(not((target("Protoss Probe", N), N > 0)))
+		then insert(target("Protoss Probe", 4)).
+		
+	% Buildes additional probes after Gateway is completed
+	if bel(aggregate_all(count,friendly("Protoss Probe",Id,_),L), L = 16), bel(not((target("Protoss Probe", N), N > 0)))
+		then insert(target("Protoss Probe", 6)).
 		
 	% Update queueSize
 	if bel(queueSize(Old)), percept(queueSize(New))

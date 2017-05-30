@@ -1,0 +1,29 @@
+use ProtossProbe as knowledge.
+use "../General/General" as knowledge.
+
+module ProtossProbeBuilderTerran {
+	
+	% If we need a Pylon, set target to build an Pylon
+	if bel(not(target("Protoss Pylon", 1))), bel(resources(_,_,Y,X), Y + 2 >= X), bel(not(friendly("Protoss Pylon", ID, [beingConstructed])))
+		then insert(target("Protoss Pylon", 1)).		
+		
+	%  If we need a Gateway, set target to build a Gateway
+	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, 20,_)), bel(aggregate_all(count,friendly("Protoss Gateway",ID,_),L), L = 0)
+		then insert(target("Protoss Gateway", 1)).
+		
+	%  If we need a Gateway, set target to build an Gateway
+	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, 24,_)), bel(aggregate_all(count,friendly("Protoss Gateway",ID,_),L), L = 1)
+		then insert(target("Protoss Gateway", 1)).
+		
+	%  If we need a Gateway, set target to build an Gateway
+	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, 44,_)), bel(aggregate_all(count,friendly("Protoss Gateway",ID,_),L), L = 2)
+		then insert(target("Protoss Gateway", 1)).
+	
+	%  If we need a Gateway, set target to build an Gateway
+	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, 59,_)), bel(aggregate_all(count,friendly("Protoss Gateway",ID,_),L), L = 3)
+		then insert(target("Protoss Gateway", 1)).
+		
+	%  If we need a Gateway, set target to build an Gateway
+	if bel(not(target("Protoss Gateway", 1))), bel(resources(_,_, 60,_)), bel(aggregate_all(count,friendly("Protoss Gateway",ID,_),L), L = 3)
+		then insert(target("Protoss Gateway", 1)).
+}

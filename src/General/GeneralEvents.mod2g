@@ -7,9 +7,9 @@ module GeneralEvents {
 	if bel(resources(OldM, OldG, OldS, OldMS)), percept(resources(NewM, NewG, NewS, NewMS))
 		then delete(resources(OldM, OldG, OldS, OldMS)) + insert(resources(NewM, NewG, NewS, NewMS)).
 		
-	% Update unitAmount
-	if bel(unitAmount(Type,Old)), percept(unitAmount(Type,New))
-		then delete(unitAmount(Type,Old)) + insert(unitAmount(Type,New)).
+	% Update enemyRace
+	if bel(enemyRace(Old)), percept(enemyRace(New))
+		then delete(enemyRace(Old)) + insert(enemyRace(New)).
 		
 	% Update the constructionSites
 	forall percept(constructionSite(X, Y, InPylonRange)), not(bel(constructionSite(X,Y, InPylonRange))) 

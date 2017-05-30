@@ -12,41 +12,66 @@ module Manager {
 	
 	% Get to know our starter location of the base
 	if (_).sent:(ownBase(X, Y))
-		then insert(ownBase(X, Y)).
+		then insert(ownBase(X, Y)). 
 		
 	% If a drone has died, delete him from believes.
 	forall (_).sent:(death(Id)), bel(probe(Name, Id)) 
 		do delete(probe(Name, Id)).
 	
 	% Receive all zealots with their name and Id.
-	forall (_).sent(isReady(Id)) 
+	forall (_).sent:(isReady(Id)) 
 		do insert(isReady(Id)).
+		
+	% remove all zealots with their name and Id once they are send to attack.
+	% forall (_).sent:(attacking(Id)) 
+	%	do delete(isReady(Id)).
+	
+	% Receive the enemybase location when discovered.			
+	forall (_).sent:(enemyLocation(X, Y))
+		do insert(enemyBase(X, Y)).
+		
+	% If someone askes for the base location send this to them.
+	forall (Name).sent?(ownBase), bel(ownBase(X, Y))
+		do (Name).send:(ownBase(X, Y)).
+		
+	% If someone askes for the base location send this to them.
+	forall (Name).sent?(enemyBase), bel(enemyBase(X, Y))
+		do (Name).send:(enemyBase(X, Y)).
 		
 	%%---- Probes ----%%%
 		
+	% Builder %
 	% If the probe stops to exist, delete it from the belief base.
 	if bel(isBuilder(Name, Id), not(probe(Name, Id)))
 		then delete(isBuilder(Name, Id)).
 	
-	% Assign a second GasGatherer
-	if bel(aggregate_all(count,isBuilder(_, Id), N), N < 1, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
+	% Assign N Builders
+	if bel(aggregate_all(count,isBuilder(_, Id), N), N < 1, probe(Name, Id), not(isScout(Name,Id)), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
 		then insert(isBuilder(Name, Id)) + (Name).send(builder).
 		
+		
+	% Scout %	
+	% If the probe stops to exist, delete it from the belief base.
+	%if bel(isScout(Name, Id), not(isScout(Name, Id)))
+	%	then delete(isScout(Name, Id)).	
+		
+	% Assign N Scouts
+	if bel(aggregate_all(count,isScout(_, Id), N), N < 1, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)), not(enemyBase(_,_)))
+		then insert(isScout(Name, Id)) + (Name).send(scout).	
+	
+	
+	% GasCollector %
 	% If the probe stops to exist, delete it from the belief base.
 	if bel(isGasCollector(Name, Id), not(probe(Name, Id)))
 		then delete(isGasCollector(Name, Id)).
 	
-	% Assign a second GasGatherer
-	if bel(aggregate_all(count,isGasCollector(_, Id), N), N < 2, probe(Name, Id), not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
+	% Assign N GasGatherer
+	if bel(aggregate_all(count,isGasCollector(_, Id), N), N < 2, probe(Name, Id), not(isScout(Name,Id)),  not(isBuilder(Name, Id)), not(isGasCollector(Name, Id)))
 		then insert(isGasCollector(Name, Id)) + (Name).send(gasCollector).
 		
 	%%---- Attacking ----%%%
 	
-	% If someone askes for the base location send this to them.
-	forall (Name).sent?(ownBase), bel(ownBase(X, Y))
-		do (Name).send:(ownBase(X, Y)).
-	
 	% When we have an army of 10 units attack the enemy.
 	forall bel(readyForAttack) do allother.send(attack).
-	
+		
 }

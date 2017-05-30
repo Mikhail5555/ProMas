@@ -5,18 +5,29 @@ use "../General/General" as knowledge.
 module ProtossProbeInit {	
 			
 	% Store our own identifier and initial state (updated in event).
-	if percept(self(Id,Type,_,_,_)), percept(workerActivity(Activity)) then insert(self(Id, Type), workerActivity(Activity)) + (manager).send:(probe(Id)).
+	if percept(self(Id,Type,_,_,_)), percept(workerActivity(Activity)) 
+		then insert(self(Id, Type), workerActivity(Activity)) + (manager).send:(probe(Id)).
+	
+	% Insert base startlocations into believe.
+	forall percept(base(X, Y, IsStart, RegionId)) 
+		do insert(base(X, Y, IsStart,RegionId)).
+	
+	% Insert Status percept into believe.
+	if percept(status(Health, Shield, Energy, Cond, X, Y)) 
+		then insert(status(Health, Shield, Energy, Cond, X, Y)).
+		
+	% Insert enemyRace percept into believe.
+	if percept(enemyRace(Race))
+		then insert(enemyRace(Race)).
 	
 	% Initial storage of the mineral field identifiers (amounts are updated in event).
-	% Also adopt the goal to fully mine each mineral field.
-	forall percept(mineralField(Id,Amount,Group,X,Y)) do insert(mineralField(Id,Amount,Group,X,Y)) + adopt(gathered(Id)).
+	forall percept(mineralField(Id,Amount,Group,X,Y)) 
+		do insert(mineralField(Id,Amount,Group,X,Y)) + adopt(gathered(Id)).
 	
-	% Init ConstructionSites
 	% If we percept a constructionSite, then insert this in our belief base.
 	forall percept(constructionSite(X,Y,InPylonRange))
 		do insert(constructionSite(X,Y,InPylonRange)).
 			
-	%Initialize resources.
 	% If we percept resources, then insert this in our belief base.
 	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
 		then insert(resources(Minerals, Gas, CSupply, MSupply)).

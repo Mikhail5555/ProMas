@@ -1,37 +1,57 @@
 use ProtossProbe as knowledge.
+use ProtossProbeScout as module.
+use ProtossProbeBuilder as module.
+use ProtossProbeBuilderTerran as module.
 use "../General/General" as knowledge.
 use "../General/GeneralEvents" as module.
 
 module ProtossProbeEvent {
 	
-	% Find all friendly Units
-	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))) do delete(friendly(Type,Id,Conditions)).
-	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))) do insert(friendly(Type,Id,Conditions)).	
-	
 	% Ask manager the base location if not yet known
-	if not(bel(ownBase(_,_)))
+	if not(bel(ownBase(_,_))) 
 		then (manager).send?(ownBase).
 		
 	% Insert ownBase location into believe
 	if (_).sent:(ownBase(X, Y))
 		then insert(ownBase(X, Y)).
 	
-	% Received builder task from the Manager
+	% Receive Builder task from the Manager.
 	if (_).sent:(builder)
 		then insert(builder).
+	
+	% Receive Scount task for the Manager.	
+	if (_).sent(scout), bel(aggregate_all(count,(base(_, _, true, _)),L), L > 2)
+		then insert(scout).
+		
+	% forall (_).sent:(scout), bel(base(X,Y, true,_))
+	%	do insert(scout) + adopt(visited(X,Y)).
 		
 	% Received gasCollector task from the Manager
 	if (_).sent:(gasCollector)
 		then insert(gasCollector).
 		
+	% All modules / updates %
 	% Run the general module
 	if true
 		then GeneralEvents.	
-		
+	
+	% Update Status Percept
+	if percept(status(Health, Shield, Energy, Cond, X, Y)), bel(status(OldHealth, OldShield, OldEnergy, OldCond, OldX, OldY)) 
+		then delete(status(OldHealth, OldShield, OldEnergy, OldCond, OldX, OldY)) + insert(status(Health, Shield, Energy, Cond, X, Y)).
+	
+	% Find all friendly Units
+	forall bel(friendly(Type,Id,Conditions)), not(percept(friendly(Type,Id,Conditions))),
+	bel(not((Type = "Protoss Probe"))), bel(not((Type = "Protoss Zealot")))
+		do delete(friendly(Type,Id,Conditions)).
+	forall percept(friendly(Type,Id,Conditions)), not(bel(friendly(Type,Id,Conditions))),
+	bel(not((Type = "Protoss Probe"))), bel(not((Type = "Protoss Zealot")))
+		do insert(friendly(Type,Id,Conditions)).
+				
 	% The handling of the mineralfields	percepts (update amounts).
-	% Amount is always > 1, as mineralFields dissapear from the game when empty.
-	forall bel(mineralField(Id,Amount,Group,X,Y)), not(percept(mineralField(Id,Amount,Group,X,Y))) do delete(mineralField(Id,Amount,Group,X,Y)).
-	forall percept(mineralField(Id,Amount,Group,X,Y)), not(bel(mineralField(Id,Amount,Group,X,Y))) do insert(mineralField(Id,Amount,Group,X,Y)).
+	forall bel(mineralField(Id,Amount,Group,X,Y)), not(percept(mineralField(Id,Amount,Group,X,Y))) 
+		do delete(mineralField(Id,Amount,Group,X,Y)).
+	forall percept(mineralField(Id,Amount,Group,X,Y)), not(bel(mineralField(Id,Amount,Group,X,Y))) 
+		do insert(mineralField(Id,Amount,Group,X,Y)).
 	
 	% Become aware of all the vespeneGeysers
 	forall percept(vespeneGeyser(Id,Amount,_,X,Y)), not(bel(vespeneGeyser(Id,Amount,X,Y))) 
@@ -40,32 +60,14 @@ module ProtossProbeEvent {
 	% The handling of the workerActivity percept
 	if percept(workerActivity(NewActivity)), bel(workerActivity(OldActivity), NewActivity \= OldActivity) 
 		then delete(workerActivity(OldActivity)) + insert(workerActivity(NewActivity)).
-			
-	% If we need a Pylon, set target to build an Pylon
-	if bel(not(target("Protoss Pylon", 1))), bel(builder), bel(resources(_,_,Y,X), Y + 4 >= X), bel(not(friendly("Protoss Pylon", ID, [beingConstructed])))
-		then insert(target("Protoss Pylon", 1)).
-			
-	% If we need a Gateway, set target to build an Gateway
-	if bel(not(target("Protoss Assimilator", 1))), bel(builder), bel(resources(_,_, X,_), X >= 24), bel(not(friendly("Protoss Assimilator", ID, [beingConstructed]))), 
-	bel(aggregate_all(count,friendly("Protoss Assimilator",ID,_),L), L = 0), bel(vespeneGeyser(_,_,_,_))
-		then insert(target("Protoss Assimilator", 1)).
-
-	% If we need an Assimilator, set target to build an Assimilator
-	if bel(not(target("Protoss Gateway", 1))), bel(builder), bel(resources(_,_, 20,_)), bel(not(friendly("Protoss Gateway", ID, [beingConstructed])))
-		then insert(target("Protoss Gateway", 1)).
-		
-	% If we need an Assimilator, set target to build an Assimilator
-	if bel(not(target("Protoss Gateway", 1))), bel(builder), bel(resources(_,_, 40,_)), bel(not(friendly("Protoss Gateway", ID, [beingConstructed])))
-		then insert(target("Protoss Gateway", 1)).
-		
-	% If we need Forge, set target to build an Forge
-	if bel(not(target("Protoss Forge", 1))), bel(builder), bel(resources(_,_, X,_), X >= 40), bel(not(friendly("Protoss Forge", ID, [beingConstructed]))),
-	bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 0)
-		then insert(target("Protoss Forge", 1)).
 	
-	% BUILD CANNONS!
-	if bel(not(target("Protoss Photon Cannon", 1))), bel(builder),bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L < 6), bel(aggregate_all(count,friendly("Protoss Forge",ID,_),L), L = 1)
-		then insert(target("Protoss Photon Cannon", 1)).
+	% Run the Scout module if scout.
+	if bel(scout, ownBase(_,_))
+		then ProtossProbeScout.
+		
+	% Run the Builder module if Builder.
+	if bel(builder) 
+		then ProtossProbeBuilderTerran.
 		
 	% If we need gas set target to build an Assimilator
 	if bel(friendly("Protoss Assimilator",ID,_)), bel(gasCollector)

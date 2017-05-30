@@ -3,17 +3,26 @@ use ProtossProbe as actionspec.
 use "../General/General" as knowledge.
 
 module ProtossProbe {
+
+	% When goal is to scout, go there.
+	if goal(visited(X, Y)), bel(aggregate_all(count,(base(_, _, true, _)),L), L > 2)
+		then move(X, Y).
+	
+	% Build Nexus
+	if bel(target(Type, Amount), Amount > 0, base(X, Y, _, _)), not(bel(ownBase(X,Y))), bel(Type = "Protoss Nexus")
+		then build(Type, X, Y) + delete(target(Type, Amount)) + insert(target(Type, Amount -1)).
 	
 	% Build Assimilator 
-	if bel(target(Type, Amount), Amount > 0), bel(vespeneGeyser(_,_,X,Y)), bel(canBuild(Type)), bel((Type = "Protoss Assimilator"))
+	if bel(target(Type, Amount), Amount > 0), bel(vespeneGeyser(_,_,X,Y)), bel(canBuild(Type)), bel(Type = "Protoss Assimilator")
 		then build(Type, X, Y) + delete(target(Type, Amount)) + insert(target(Type, Amount - 1)).
 	
 	% Build Pylon
-	if bel(target(Type, Amount), Amount > 0), bel(constructionSite(X,Y,InPylonRange), InPylonRange = false), bel(canBuild(Type)), bel((Type = "Protoss Pylon"))
+	if bel(target(Type, Amount), Amount > 0), bel(constructionSite(X,Y, InPylonRange), InPylonRange = false), bel(canBuild(Type)), bel(Type = "Protoss Pylon")
 		then build(Type, X, Y) + delete(target(Type, Amount)) + insert(target(Type, Amount - 1)).
 	
 	% Build Anything that isn't a pylon
-	if bel(target(Type, Amount), Amount > 0), bel(constructionSite(X,Y,InPylonRange), InPylonRange = true), bel(canBuild(Type)), bel(not((Type = "Protoss Pylon")))
+	if bel(target(Type, Amount), Amount > 0), bel(constructionSite(X,Y, InPylonRange), InPylonRange = true), bel(canBuild(Type)), 
+	bel(not(Type = "Protoss Pylon")), bel(not(Type = "Protoss Nexus"))
 		then build(Type, X, Y) + delete(target(Type, Amount)) + insert(target(Type, Amount - 1)).
 
 	% Gather gas if available if assigned to gather gas

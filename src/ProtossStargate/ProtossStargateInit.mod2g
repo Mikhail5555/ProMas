@@ -1,26 +1,17 @@
-use ProtossNexus as knowledge.
+use ProtossStargate as knowledge.
 use "../General/General" as knowledge.
 
-module ProtossNexusInit {
+module ProtossStargateInit {
 	
-	%Become self aware
+	% Become self aware
 	if percept(self(Id,Type,_,_,_)) 
 		then insert(self(Id, Type)).
-		
-	% Target to make the right amount of workers.
-	if true
-		then insert(target("Protoss Probe", 4)).
-		
+			
 	% Initialize QueueSize
 	if true
 		then insert(queueSize(0)).
 		
-	% Send ownBase location to manager
-	if percept(status(_, _, _ ,_,X, Y))
-		then (manager).send(ownBase(X, Y)).
-		
 	% Initialize resources
 	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
 		then insert(resources(Minerals, Gas, CSupply, MSupply)).
-	
 }

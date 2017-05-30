@@ -1,8 +1,8 @@
-use ProtossZealot as knowledge.
+use ProtossDragoon as knowledge.
 use "../General/General" as knowledge.
 use "../General/GeneralEvents" as module.
 
-module ProtossZealotEvents {
+module ProtossDragoonEvents {
 	
 	% Ask manager the base location if not yet known
 	if not(bel(ownBase(_,_)))

@@ -1,21 +1,16 @@
-use ProtossForge as knowledge.
+use ProtossCyberneticsCore as knowledge.
 use "../General/General" as knowledge.
 
-module ProtossForgeInit {
+module ProtossCyberneticsCoreInit {
 	
+
 	% Become self aware
 	if percept(self(Id,Type,_,_,_)) then insert(self(Id, Type)).
-	
-	% Initialize upgrading believe
-	% if true 
-	%	then adopt(upgrading("Protoss Ground Weapons")).
-		
-	% Initialize upgrading believe
-	if true 
-		then adopt(upgrading("Protoss Ground Armor")).
 
 	% Initialize resources
 	if percept(resources(Minerals, Gas, CSupply, MSupply)) 
 		then insert(resources(Minerals, Gas, CSupply, MSupply)).
-	
+		
+	if true 
+		then adopt(upgrading("Singularity Charge")).	
 }
