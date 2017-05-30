@@ -47,6 +47,7 @@ test ProtossNexus with
 		eventually percept(resources(Minerals, _, _, _), Minerals >= 100).
 		eventually percept(resources(Minerals, _, _, _), Minerals >= 150).
 
+		%percept(mineralField(Id,Amount,Group,X,Y)) leadsto insert(mineralField(Id,Amount,Group,X,Y)).
 		
 		
 	}
