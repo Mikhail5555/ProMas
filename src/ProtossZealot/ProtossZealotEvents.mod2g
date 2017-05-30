@@ -33,10 +33,10 @@ module ProtossZealotEvents {
 		delete(status(OldHealth, OldShield, OldEnergy, OldCond, OldX, OldY)) + insert(status(NewHealth, NewShield, NewEnergy, NewCond, NewX, NewY)).
 	
 	% Insert enemy when one is detected and delete when enemy is death
-	forall percept(enemy(Type, Id, Health, Shields)), bel(not(enemy(Type, Id, Health, Shields))) 
-		do insert(enemy(Type, Id, Health, Shields)).
-	forall bel(enemy(Type, Id, Health, Shields)) , not(percept(enemy(Type, Id, Health, Shields)))
-		do delete(enemy(Type, Id, Health, Shields)).
+	forall bel(enemy(Type, Id, Health, Shields, Condition, X, Y)), not(percept(enemy(Type, Id, Health, Shields, Condition, X, Y)))
+		do delete(enemy(Type, Id, Health, Shields, Condition, X, Y)).
+	forall percept(enemy(Type, Id, Health, Shields, Condition, X, Y)), bel(not(enemy(Type, Id, Health, Shields, Condition, X, Y))) 
+		do insert(enemy(Type, Id, Health, Shields, Condition, X, Y)).
 		
 	% Find the only place enemy can be (On small map)
 	if not(bel(enemyBase(_, _))), bel(base(X2, Y2, true), ownBase(X1, Y1), distance(X2, Y2, X1, Y1, D), D > 30), 
@@ -53,11 +53,15 @@ module ProtossZealotEvents {
 	if (_).sent(attack), bel(self(Id, _, _, _, _))
 		then insert(attack) + (manager).send:(attacking(Id)).	
 	
-	% When ready insert attack the X, Y of enemy base
-	if not(goal(attack(X, Y))), bel(attack, enemyBase(X, Y))
+	% Attack enemy when visible and nexus has been reached.
+	if bel(attack, not(attack(X, Y)), reachedBase), bel(enemy(_, _, _, _, _, X, Y))
 		then adopt(attack(X, Y)).
 	
-	if bel(attack), percept(enemy(Type, Id, Health, Shields))
-		then adopt(attack(Id)).
-	
+	% Move to random direction when at enemy base location
+	if bel(enemyBase(X1, Y1), status(_,_,_,_,X2, Y2), distance(X1, Y1, X2, Y2, D), D =< 1)
+		then insert(reachedBase) + drop(attack(X1, X2)).
+		
+	% When ready insert attack the X, Y of enemy base
+	if not(goal(attack(_, _))), bel(attack, enemyBase(X, Y), not(reachedBase))
+		then adopt(attack(X, Y)).
 }

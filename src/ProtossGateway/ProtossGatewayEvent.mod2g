@@ -20,7 +20,7 @@ module ProtossGatewayEvent {
 		then delete(queueSize(Old)) + insert(queueSize(New)).
 		
 	% Buildes additional probes after Gateway is completed
-	if bel(aggregate_all(count,friendly("Protoss Zealot",Id,_),L), L =< 10), bel(not((target("Protoss Zealot", N), N > 0)))
+	if bel(aggregate_all(count,friendly("Protoss Zealot",Id,_),L), L =< 50), bel(not((target("Protoss Zealot", N), N > 0)))
 		then insert(target("Protoss Zealot", 1)).
 	
 	if bel(aggregate_all(count,friendly("Protoss Dragoon",ID,_),L), L < 3)

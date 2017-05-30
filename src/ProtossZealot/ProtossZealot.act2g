@@ -2,12 +2,12 @@ use ProtossZealot as knowledge.
 
 % attack action
 define attack(ID) with
-	pre { true }
+	pre { not(attack(_)) }
 	post { true }
 	
 % move action
 define move(X,Y) with 
-	pre { true }
+	pre { not(move(_, _)) }
 	post { true }
 
 % attack at nearest coordinate action
