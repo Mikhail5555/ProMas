@@ -6,10 +6,6 @@ module ProtossStargateInit {
 	% Become self aware
 	if percept(self(Id,Type,_,_,_)) 
 		then insert(self(Id, Type)).
-	
-	% Sets the probe about as goal
-	if bel(target(Type, Amount))
-		then adopt(unitAmount(Type, Amount)).
 			
 	% Initialize QueueSize
 	if true

@@ -4,7 +4,7 @@ use "StarCraft Connector.jar" as environment with
     map="(2)Destination.scx",
 	own_race="Protoss",
 	auto_menu="Single_Player",
-	enemy_race="Zerg",
+	enemy_race="Terran",
 	debug="true", % launch the developer tool
 	invulnerable="false", % individual assignment only
 	game_speed=50. % default tournament speed
@@ -14,7 +14,6 @@ define manager as agent {
 	use Manager.Manager as main module.
 }
 
-% DO NOT REMOVE OR CHANGE THIS AGENT DEFINITION
 % Defines an agent for the player's main base
 define mainBase as agent {
 	use ProtossNexus.ProtossNexus as main module.
@@ -28,6 +27,7 @@ define protossProbe as agent {
 	use ProtossProbe.ProtossProbeInit as init module.
 	use ProtossProbe.ProtossProbeEvent as event module.
 } 
+
 % Define a zealot agent
 define protossZealot as agent {
 	use ProtossZealot.ProtossZealot as main module.
@@ -35,24 +35,28 @@ define protossZealot as agent {
 	use ProtossZealot.ProtossZealotEvents as event module.
 }
 
+% Define a Forge as agent
 define protossForge as agent {
 	use ProtossForge.ProtossForge as main module.
 	use ProtossForge.ProtossForgeInit as init module.
 	use ProtossForge.ProtossForgeEvent as event module.
 }
 
+% Define a Gateway as agent
 define protossGateway as agent {
 	use protossGateway.protossGateway as main module.
 	use protossGateway.protossGatewayInit as init module.
 	use protossGateway.protossGatewayEvent as event module.
 }
 
+% Define a CyberneticsCore as agent
 define protossCyberneticsCore as agent {
 	use protossCyberneticsCore.protossCyberneticsCore as main module.
 	use protossCyberneticsCore.protossCyberneticsCoreInit as init module.
 	use protossCyberneticsCore.protossCyberneticsCoreEvent as event module.
 }
 
+% Define a Stargate as agentﬂ
 define protossStargate as agent {
 	use protossStargate.protossStargate as main module.
 	use protossStargate.protossStargateInit as init module.
@@ -75,10 +79,10 @@ launchpolicy{
 	% Launch a probe agent for each worker
 	when type = protossProbe launch protossProbe.
 	
-	%Launch a ForgeAgent for each forge.
+	% Launch a ForgeAgent for each forge.
 	when type = protossForge launch protossForge.
 
-  %Launch a zealot agent
+  	% Launch a zealot agent
 	when type = protossZealot launch protossZealot.
 
 	% Launch a GatewayAgent for each gateway

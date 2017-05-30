@@ -23,8 +23,8 @@ module Manager {
 		do insert(isReady(Id)).
 		
 	% remove all zealots with their name and Id once they are send to attack.
-	forall (_).sent:(attacking(Id)) 
-		do delete(isReady(Id)).
+	% forall (_).sent:(attacking(Id)) 
+	%	do delete(isReady(Id)).
 	
 	% Receive the enemybase location when discovered.			
 	forall (_).sent:(enemyLocation(X, Y))

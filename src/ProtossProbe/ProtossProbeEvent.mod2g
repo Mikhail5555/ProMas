@@ -1,6 +1,7 @@
 use ProtossProbe as knowledge.
 use ProtossProbeScout as module.
 use ProtossProbeBuilder as module.
+use ProtossProbeBuilderTerran as module.
 use "../General/General" as knowledge.
 use "../General/GeneralEvents" as module.
 
@@ -66,7 +67,7 @@ module ProtossProbeEvent {
 		
 	% Run the Builder module if Builder.
 	if bel(builder) 
-		then ProtossProbeBuilder.
+		then ProtossProbeBuilderTerran.
 		
 	% If we need gas set target to build an Assimilator
 	if bel(friendly("Protoss Assimilator",ID,_)), bel(gasCollector)

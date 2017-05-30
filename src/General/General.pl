@@ -1,6 +1,5 @@
  :- dynamic
  % Units
-	unitAmount/2,		% The amount of units 
 	 
  % Buildings
 	constructionSite/3,	% The places where you can build
